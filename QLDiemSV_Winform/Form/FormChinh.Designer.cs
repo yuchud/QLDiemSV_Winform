@@ -34,21 +34,26 @@
             this.btn_QL_MonHoc = new DevExpress.XtraBars.BarButtonItem();
             this.btn_QL_GiangVien = new DevExpress.XtraBars.BarButtonItem();
             this.btn_QL_SinhVien = new DevExpress.XtraBars.BarButtonItem();
-            this.btn_DangNhap = new DevExpress.XtraBars.BarButtonItem();
+            this.btn_DangNhap100 = new DevExpress.XtraBars.BarButtonItem();
             this.btn_QL_TaoLopTinChi = new DevExpress.XtraBars.BarButtonItem();
-            this.btn_DangXuat = new DevExpress.XtraBars.BarButtonItem();
+            this.btn_DangXuat100 = new DevExpress.XtraBars.BarButtonItem();
             this.btn_XepLopTinChi = new DevExpress.XtraBars.BarButtonItem();
-            this.rbp_HeThong = new DevExpress.XtraBars.Ribbon.RibbonPage();
-            this.ribbonPageGroup4 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
-            this.rbp_QuanLy = new DevExpress.XtraBars.Ribbon.RibbonPage();
-            this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
-            this.ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
-            this.ribbonPageGroup6 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+            this.btn_DangNhap = new DevExpress.XtraBars.BarButtonItem();
+            this.btn_DangXuat = new DevExpress.XtraBars.BarButtonItem();
+            this.btn_DoiMatKhau = new DevExpress.XtraBars.BarButtonItem();
+            this.rbg_HeThong = new DevExpress.XtraBars.Ribbon.RibbonPage();
+            this.tbgp_TaiKhoan = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+            this.rbpg_MonHoc = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+            this.rbgp_NhanSu = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+            this.rbpg_Lop = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonStatusBar = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.btn_XepLop = new DevExpress.XtraBars.BarButtonItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.tssl_Ma = new System.Windows.Forms.ToolStripStatusLabel();
+            this.ribbonPageGroup4 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+            this.rbpg_Diem = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+            this.btn_NhapDiem = new DevExpress.XtraBars.BarButtonItem();
             ((System.ComponentModel.ISupportInitialize)(this.ribbon)).BeginInit();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -62,16 +67,19 @@
             this.btn_QL_MonHoc,
             this.btn_QL_GiangVien,
             this.btn_QL_SinhVien,
-            this.btn_DangNhap,
+            this.btn_DangNhap100,
             this.btn_QL_TaoLopTinChi,
+            this.btn_DangXuat100,
+            this.btn_XepLopTinChi,
+            this.btn_DangNhap,
             this.btn_DangXuat,
-            this.btn_XepLopTinChi});
+            this.btn_DoiMatKhau,
+            this.btn_NhapDiem});
             this.ribbon.Location = new System.Drawing.Point(0, 0);
-            this.ribbon.MaxItemId = 17;
+            this.ribbon.MaxItemId = 21;
             this.ribbon.Name = "ribbon";
             this.ribbon.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
-            this.rbp_HeThong,
-            this.rbp_QuanLy});
+            this.rbg_HeThong});
             this.ribbon.Size = new System.Drawing.Size(1364, 158);
             this.ribbon.StatusBar = this.ribbonStatusBar;
             // 
@@ -115,12 +123,11 @@
             this.btn_QL_SinhVien.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.SmallWithText;
             this.btn_QL_SinhVien.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btn_QL_SinhVien_ItemClick);
             // 
-            // btn_DangNhap
+            // btn_DangNhap100
             // 
-            this.btn_DangNhap.Caption = "Đăng nhập";
-            this.btn_DangNhap.Id = 11;
-            this.btn_DangNhap.Name = "btn_DangNhap";
-            this.btn_DangNhap.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btn_DangNhap_ItemClick);
+            this.btn_DangNhap100.Caption = "Đăng nhập";
+            this.btn_DangNhap100.Id = 11;
+            this.btn_DangNhap100.Name = "btn_DangNhap100";
             // 
             // btn_QL_TaoLopTinChi
             // 
@@ -132,12 +139,11 @@
             this.btn_QL_TaoLopTinChi.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.SmallWithText;
             this.btn_QL_TaoLopTinChi.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btn_QL_TaoLopTinChi_ItemClick);
             // 
-            // btn_DangXuat
+            // btn_DangXuat100
             // 
-            this.btn_DangXuat.Caption = "Đăng xuất";
-            this.btn_DangXuat.Id = 15;
-            this.btn_DangXuat.Name = "btn_DangXuat";
-            this.btn_DangXuat.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btn_DangXuat_ItemClick);
+            this.btn_DangXuat100.Caption = "Đăng xuất";
+            this.btn_DangXuat100.Id = 15;
+            this.btn_DangXuat100.Name = "btn_DangXuat100";
             // 
             // btn_XepLopTinChi
             // 
@@ -147,48 +153,77 @@
             this.btn_XepLopTinChi.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("btn_XepLopTinChi.ImageOptions.LargeImage")));
             this.btn_XepLopTinChi.Name = "btn_XepLopTinChi";
             this.btn_XepLopTinChi.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.SmallWithText;
+            this.btn_XepLopTinChi.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btn_XepLopTinChi_ItemClick);
             // 
-            // rbp_HeThong
+            // btn_DangNhap
             // 
-            this.rbp_HeThong.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
-            this.ribbonPageGroup4});
-            this.rbp_HeThong.Name = "rbp_HeThong";
-            this.rbp_HeThong.Text = "Hệ thống";
+            this.btn_DangNhap.Caption = "Đăng nhập";
+            this.btn_DangNhap.Id = 17;
+            this.btn_DangNhap.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btn_DangNhap.ImageOptions.Image")));
+            this.btn_DangNhap.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("btn_DangNhap.ImageOptions.LargeImage")));
+            this.btn_DangNhap.Name = "btn_DangNhap";
+            this.btn_DangNhap.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.SmallWithText;
+            this.btn_DangNhap.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btn_DangNhap_ItemClick);
             // 
-            // ribbonPageGroup4
+            // btn_DangXuat
             // 
-            this.ribbonPageGroup4.ItemLinks.Add(this.btn_DangNhap);
-            this.ribbonPageGroup4.ItemLinks.Add(this.btn_DangXuat);
-            this.ribbonPageGroup4.Name = "ribbonPageGroup4";
-            this.ribbonPageGroup4.Text = "ribbonPageGroup4";
+            this.btn_DangXuat.Caption = "Đăng xuất";
+            this.btn_DangXuat.Id = 18;
+            this.btn_DangXuat.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btn_DangXuat.ImageOptions.Image")));
+            this.btn_DangXuat.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("btn_DangXuat.ImageOptions.LargeImage")));
+            this.btn_DangXuat.Name = "btn_DangXuat";
+            this.btn_DangXuat.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.SmallWithText;
+            this.btn_DangXuat.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btn_DangXuat_ItemClick);
             // 
-            // rbp_QuanLy
+            // btn_DoiMatKhau
             // 
-            this.rbp_QuanLy.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
-            this.ribbonPageGroup1,
-            this.ribbonPageGroup2,
-            this.ribbonPageGroup6});
-            this.rbp_QuanLy.Name = "rbp_QuanLy";
-            this.rbp_QuanLy.Text = "Quản Lý";
+            this.btn_DoiMatKhau.Caption = "Đổi Mật Khẩu";
+            this.btn_DoiMatKhau.Id = 19;
+            this.btn_DoiMatKhau.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btn_DoiMatKhau.ImageOptions.Image")));
+            this.btn_DoiMatKhau.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("btn_DoiMatKhau.ImageOptions.LargeImage")));
+            this.btn_DoiMatKhau.Name = "btn_DoiMatKhau";
+            this.btn_DoiMatKhau.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.SmallWithText;
+            this.btn_DoiMatKhau.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btn_DoiMatKhau_ItemClick);
             // 
-            // ribbonPageGroup1
+            // rbg_HeThong
             // 
-            this.ribbonPageGroup1.ItemLinks.Add(this.btn_QL_LopSinhVien);
-            this.ribbonPageGroup1.ItemLinks.Add(this.btn_QL_MonHoc);
-            this.ribbonPageGroup1.Name = "ribbonPageGroup1";
+            this.rbg_HeThong.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
+            this.tbgp_TaiKhoan,
+            this.rbpg_MonHoc,
+            this.rbgp_NhanSu,
+            this.rbpg_Lop,
+            this.rbpg_Diem});
+            this.rbg_HeThong.Name = "rbg_HeThong";
+            this.rbg_HeThong.Text = "Hệ thống";
             // 
-            // ribbonPageGroup2
+            // tbgp_TaiKhoan
             // 
-            this.ribbonPageGroup2.ItemLinks.Add(this.btn_QL_GiangVien);
-            this.ribbonPageGroup2.ItemLinks.Add(this.btn_QL_SinhVien);
-            this.ribbonPageGroup2.Name = "ribbonPageGroup2";
+            this.tbgp_TaiKhoan.ItemLinks.Add(this.btn_DangNhap);
+            this.tbgp_TaiKhoan.ItemLinks.Add(this.btn_DoiMatKhau);
+            this.tbgp_TaiKhoan.ItemLinks.Add(this.btn_DangXuat);
+            this.tbgp_TaiKhoan.Name = "tbgp_TaiKhoan";
+            this.tbgp_TaiKhoan.Text = "Tài Khoản";
             // 
-            // ribbonPageGroup6
+            // rbpg_MonHoc
             // 
-            this.ribbonPageGroup6.ItemLinks.Add(this.btn_QL_TaoLopTinChi);
-            this.ribbonPageGroup6.ItemLinks.Add(this.btn_XepLopTinChi);
-            this.ribbonPageGroup6.Name = "ribbonPageGroup6";
-            this.ribbonPageGroup6.Text = "ribbonPageGroup6";
+            this.rbpg_MonHoc.ItemLinks.Add(this.btn_QL_MonHoc);
+            this.rbpg_MonHoc.Name = "rbpg_MonHoc";
+            this.rbpg_MonHoc.Text = "Môn Học";
+            // 
+            // rbgp_NhanSu
+            // 
+            this.rbgp_NhanSu.ItemLinks.Add(this.btn_QL_GiangVien);
+            this.rbgp_NhanSu.ItemLinks.Add(this.btn_QL_SinhVien);
+            this.rbgp_NhanSu.Name = "rbgp_NhanSu";
+            this.rbgp_NhanSu.Text = "Nhân sự";
+            // 
+            // rbpg_Lop
+            // 
+            this.rbpg_Lop.ItemLinks.Add(this.btn_QL_LopSinhVien);
+            this.rbpg_Lop.ItemLinks.Add(this.btn_QL_TaoLopTinChi);
+            this.rbpg_Lop.ItemLinks.Add(this.btn_XepLopTinChi);
+            this.rbpg_Lop.Name = "rbpg_Lop";
+            this.rbpg_Lop.Text = "Lớp";
             // 
             // ribbonStatusBar
             // 
@@ -231,6 +266,28 @@
             this.tssl_Ma.Size = new System.Drawing.Size(24, 17);
             this.tssl_Ma.Text = "Mã";
             // 
+            // ribbonPageGroup4
+            // 
+            this.ribbonPageGroup4.ItemLinks.Add(this.btn_DangNhap100);
+            this.ribbonPageGroup4.ItemLinks.Add(this.btn_DangXuat100);
+            this.ribbonPageGroup4.Name = "ribbonPageGroup4";
+            this.ribbonPageGroup4.Text = "ribbonPageGroup4";
+            // 
+            // rbpg_Diem
+            // 
+            this.rbpg_Diem.ItemLinks.Add(this.btn_NhapDiem);
+            this.rbpg_Diem.Name = "rbpg_Diem";
+            this.rbpg_Diem.Text = "Điểm";
+            // 
+            // btn_NhapDiem
+            // 
+            this.btn_NhapDiem.Caption = "Nhập điểm";
+            this.btn_NhapDiem.Id = 20;
+            this.btn_NhapDiem.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btn_NhapDiem.ImageOptions.Image")));
+            this.btn_NhapDiem.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("btn_NhapDiem.ImageOptions.LargeImage")));
+            this.btn_NhapDiem.Name = "btn_NhapDiem";
+            this.btn_NhapDiem.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.SmallWithText;
+            // 
             // FormChinh
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -256,24 +313,31 @@
         #endregion
 
         private DevExpress.XtraBars.Ribbon.RibbonControl ribbon;
-        private DevExpress.XtraBars.Ribbon.RibbonPage rbp_QuanLy;
-        private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup1;
+        private DevExpress.XtraBars.Ribbon.RibbonPage rbg_HeThong;
+        private DevExpress.XtraBars.Ribbon.RibbonPageGroup rbgp_MonHoc;
         private DevExpress.XtraBars.Ribbon.RibbonStatusBar ribbonStatusBar;
         private DevExpress.XtraBars.BarButtonItem btn_QL_LopSinhVien;
-        private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup2;
+        private DevExpress.XtraBars.Ribbon.RibbonPageGroup rbgp_NhanSu;
         private DevExpress.XtraBars.BarButtonItem btn_QL_MonHoc;
         private DevExpress.XtraBars.BarButtonItem btn_QL_GiangVien;
         private DevExpress.XtraBars.BarButtonItem btn_QL_SinhVien;
-        private DevExpress.XtraBars.Ribbon.RibbonPage rbp_HeThong;
-        private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup4;
-        private DevExpress.XtraBars.BarButtonItem btn_DangNhap;
+        private DevExpress.XtraBars.BarButtonItem btn_DangNhap100;
         private System.Windows.Forms.TabControl tabControl1;
         private DevExpress.XtraBars.BarButtonItem btn_XepLop;
-        private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup6;
+        private DevExpress.XtraBars.Ribbon.RibbonPageGroup rbgp_Lop;
         private DevExpress.XtraBars.BarButtonItem btn_QL_TaoLopTinChi;
-        private DevExpress.XtraBars.BarButtonItem btn_DangXuat;
+        private DevExpress.XtraBars.BarButtonItem btn_DangXuat100;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel tssl_Ma;
         private DevExpress.XtraBars.BarButtonItem btn_XepLopTinChi;
+        private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup4;
+        private DevExpress.XtraBars.BarButtonItem btn_DangNhap;
+        private DevExpress.XtraBars.BarButtonItem btn_DangXuat;
+        private DevExpress.XtraBars.Ribbon.RibbonPageGroup tbgp_TaiKhoan;
+        private DevExpress.XtraBars.BarButtonItem btn_DoiMatKhau;
+        private DevExpress.XtraBars.Ribbon.RibbonPageGroup rbpg_MonHoc;
+        private DevExpress.XtraBars.Ribbon.RibbonPageGroup rbpg_Lop;
+        private DevExpress.XtraBars.BarButtonItem btn_NhapDiem;
+        private DevExpress.XtraBars.Ribbon.RibbonPageGroup rbpg_Diem;
     }
 }

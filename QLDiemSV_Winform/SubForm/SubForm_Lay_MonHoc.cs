@@ -26,6 +26,10 @@ namespace QLDiemSV_Winform.SubForm
         void form_LoadInitial(List<int> exclusionSubjectIdList)
         {
             dgv_MonHoc.DataSource = dataListMonHoc_Create(exclusionSubjectIdList);
+            if (dgv_MonHoc.SelectedRows.Count > 0)
+            {
+                btn_XacNhan.Enabled = true;
+            }
         }
         private List<MonHocDTO> dataListMonHoc_Create(List<int> exclusionSubjectIdList)
         {

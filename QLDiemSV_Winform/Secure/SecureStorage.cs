@@ -1,8 +1,10 @@
 ﻿using CredentialManagement;
 using QLDiemSV_Winform.Controller;
+using QLDiemSV_Winform.DTO;
 using QLDiemSV_Winform.Validation;
 using System;
 using System.Linq;
+using System.Net;
 
 namespace QLDiemSV_Winform.Secure
 {
@@ -41,6 +43,24 @@ namespace QLDiemSV_Winform.Secure
                 int maQuyen = GiangVienApiController.GetGiangVien(Convert.ToInt32(tenDangNhap)).MaQuyen;
                 quyen = TeacherDecentralization.GetQuyenGiangVien(maQuyen);
                 credential.Save();
+            }
+        }
+
+        public static bool ChangePassword(string matKhauMoi)
+        {
+            using (var credential = new Credential { Target = "MyAppCredential" })
+            {
+                if (credential.Load())
+                {
+                    HttpStatusCode httpStatusCode = GiangVienApiController.PutMatKhau(new DTO.TaiKhoanDTO(credential.Username, matKhauMoi));
+                    bool isChangeSuccessful = StatusCodeChecker.GetResponseClass(httpStatusCode) == EnumCode.HTTPResponseStatusClass.SuccessfulResponses;
+                    if(isChangeSuccessful)
+                    {
+                        credential.Password = matKhauMoi;
+                        return true;
+                    }
+                }
+                return false;
             }
         }
 

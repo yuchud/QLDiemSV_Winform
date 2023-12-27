@@ -38,7 +38,7 @@ namespace QLDiemSV_Winform
 
         private string jsonDangNhap_create(string tenDangNhap, string matKhau)
         {
-            return JsonConvert.SerializeObject(new DangNhapDTO(tenDangNhap, matKhau));
+            return JsonConvert.SerializeObject(new TaiKhoanDTO(tenDangNhap, matKhau));
         }
 
         private string dataDangNhap_PostApi(string tenDangNhap, string matKhau)
@@ -65,10 +65,10 @@ namespace QLDiemSV_Winform
                     lb_error_TenDangNhap.Text = "Vui lòng nhập tên đăng nhập";
                     return;
                 }
-                else if (matKhau.Length < 6)
+                else if (tenDangNhap.Length == 0)
                 {
                     lb_error_MatKhau.Visible = true;
-                    lb_error_MatKhau.Text = "Mật khẩu cần ít nhất 6 kí tự";
+                    lb_error_MatKhau.Text = "Vui lòng nhập mật khẩu";
                     return;
                 }
 
@@ -106,6 +106,11 @@ namespace QLDiemSV_Winform
         private void btn_TogglePwd_Click(object sender, EventArgs e)
         {
             txt_MatKhau.UseSystemPasswordChar = !txt_MatKhau.UseSystemPasswordChar;
+        }
+
+        private void txt_MatKhau_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

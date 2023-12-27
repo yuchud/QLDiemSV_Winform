@@ -34,20 +34,18 @@
             this.btn_Them = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
             this.label4 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.txt_Ky = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.txt_Khoa = new System.Windows.Forms.TextBox();
+            this.txt_MonHoc = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.btn_Chon = new System.Windows.Forms.Button();
-            this.txt_Lop = new System.Windows.Forms.TextBox();
+            this.txt_Nam = new System.Windows.Forms.TextBox();
             this.lbl_SoLuong = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.dgv_SinhVien = new System.Windows.Forms.DataGridView();
             this.MaSv = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Ho = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Ten = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.DiaChi = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.SDT = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tenSv = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tenLopSv = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_SinhVien)).BeginInit();
@@ -73,6 +71,7 @@
             this.btn_Xoa.TabIndex = 3;
             this.btn_Xoa.Text = "Xóa";
             this.btn_Xoa.UseVisualStyleBackColor = true;
+            this.btn_Xoa.Click += new System.EventHandler(this.btn_Xoa_Click);
             // 
             // btn_Thoat
             // 
@@ -83,6 +82,7 @@
             this.btn_Thoat.TabIndex = 2;
             this.btn_Thoat.Text = "Thoát";
             this.btn_Thoat.UseVisualStyleBackColor = true;
+            this.btn_Thoat.Click += new System.EventHandler(this.btn_Thoat_Click);
             // 
             // btn_Them
             // 
@@ -93,17 +93,18 @@
             this.btn_Them.TabIndex = 0;
             this.btn_Them.Text = "Thêm";
             this.btn_Them.UseVisualStyleBackColor = true;
+            this.btn_Them.Click += new System.EventHandler(this.btn_Them_Click);
             // 
             // panel2
             // 
             this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.panel2.Controls.Add(this.label4);
-            this.panel2.Controls.Add(this.textBox1);
+            this.panel2.Controls.Add(this.txt_Ky);
             this.panel2.Controls.Add(this.label3);
-            this.panel2.Controls.Add(this.txt_Khoa);
+            this.panel2.Controls.Add(this.txt_MonHoc);
             this.panel2.Controls.Add(this.label2);
             this.panel2.Controls.Add(this.btn_Chon);
-            this.panel2.Controls.Add(this.txt_Lop);
+            this.panel2.Controls.Add(this.txt_Nam);
             this.panel2.Controls.Add(this.lbl_SoLuong);
             this.panel2.Controls.Add(this.label1);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
@@ -121,13 +122,13 @@
             this.label4.TabIndex = 12;
             this.label4.Text = "Kỳ:";
             // 
-            // textBox1
+            // txt_Ky
             // 
-            this.textBox1.Location = new System.Drawing.Point(185, 29);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.ReadOnly = true;
-            this.textBox1.Size = new System.Drawing.Size(25, 21);
-            this.textBox1.TabIndex = 11;
+            this.txt_Ky.Location = new System.Drawing.Point(185, 29);
+            this.txt_Ky.Name = "txt_Ky";
+            this.txt_Ky.ReadOnly = true;
+            this.txt_Ky.Size = new System.Drawing.Size(25, 21);
+            this.txt_Ky.TabIndex = 11;
             // 
             // label3
             // 
@@ -138,13 +139,13 @@
             this.label3.TabIndex = 10;
             this.label3.Text = "Môn học:";
             // 
-            // txt_Khoa
+            // txt_MonHoc
             // 
-            this.txt_Khoa.Location = new System.Drawing.Point(69, 6);
-            this.txt_Khoa.Name = "txt_Khoa";
-            this.txt_Khoa.ReadOnly = true;
-            this.txt_Khoa.Size = new System.Drawing.Size(207, 21);
-            this.txt_Khoa.TabIndex = 9;
+            this.txt_MonHoc.Location = new System.Drawing.Point(69, 6);
+            this.txt_MonHoc.Name = "txt_MonHoc";
+            this.txt_MonHoc.ReadOnly = true;
+            this.txt_MonHoc.Size = new System.Drawing.Size(207, 21);
+            this.txt_MonHoc.TabIndex = 9;
             // 
             // label2
             // 
@@ -163,14 +164,15 @@
             this.btn_Chon.TabIndex = 7;
             this.btn_Chon.Text = "Chọn Lớp TC";
             this.btn_Chon.UseVisualStyleBackColor = true;
+            this.btn_Chon.Click += new System.EventHandler(this.btn_Chon_Click);
             // 
-            // txt_Lop
+            // txt_Nam
             // 
-            this.txt_Lop.Location = new System.Drawing.Point(69, 29);
-            this.txt_Lop.Name = "txt_Lop";
-            this.txt_Lop.ReadOnly = true;
-            this.txt_Lop.Size = new System.Drawing.Size(81, 21);
-            this.txt_Lop.TabIndex = 6;
+            this.txt_Nam.Location = new System.Drawing.Point(69, 29);
+            this.txt_Nam.Name = "txt_Nam";
+            this.txt_Nam.ReadOnly = true;
+            this.txt_Nam.Size = new System.Drawing.Size(81, 21);
+            this.txt_Nam.TabIndex = 6;
             // 
             // lbl_SoLuong
             // 
@@ -197,10 +199,8 @@
             this.dgv_SinhVien.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgv_SinhVien.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.MaSv,
-            this.Ho,
-            this.Ten,
-            this.DiaChi,
-            this.SDT});
+            this.tenSv,
+            this.tenLopSv});
             this.dgv_SinhVien.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgv_SinhVien.Location = new System.Drawing.Point(0, 106);
             this.dgv_SinhVien.MultiSelect = false;
@@ -210,6 +210,7 @@
             this.dgv_SinhVien.Size = new System.Drawing.Size(954, 397);
             this.dgv_SinhVien.TabIndex = 8;
             this.dgv_SinhVien.TabStop = false;
+            this.dgv_SinhVien.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_SinhVien_CellClick);
             // 
             // MaSv
             // 
@@ -222,44 +223,25 @@
             this.MaSv.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.MaSv.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
-            // Ho
+            // tenSv
             // 
-            this.Ho.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.Ho.DataPropertyName = "ho";
-            this.Ho.HeaderText = "Họ";
-            this.Ho.MaxInputLength = 20;
-            this.Ho.Name = "Ho";
-            this.Ho.ReadOnly = true;
-            this.Ho.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.tenSv.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.tenSv.DataPropertyName = "tenSv";
+            this.tenSv.HeaderText = "Họ và tên";
+            this.tenSv.MaxInputLength = 20;
+            this.tenSv.Name = "tenSv";
+            this.tenSv.ReadOnly = true;
+            this.tenSv.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
-            // Ten
+            // tenLopSv
             // 
-            this.Ten.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.Ten.DataPropertyName = "ten";
-            this.Ten.HeaderText = "Tên";
-            this.Ten.MaxInputLength = 10;
-            this.Ten.Name = "Ten";
-            this.Ten.ReadOnly = true;
-            this.Ten.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // DiaChi
-            // 
-            this.DiaChi.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.DiaChi.DataPropertyName = "diaChi";
-            this.DiaChi.HeaderText = "Địa Chỉ";
-            this.DiaChi.Name = "DiaChi";
-            this.DiaChi.ReadOnly = true;
-            this.DiaChi.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // SDT
-            // 
-            this.SDT.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.SDT.DataPropertyName = "sdt";
-            this.SDT.HeaderText = "SDT";
-            this.SDT.MaxInputLength = 14;
-            this.SDT.Name = "SDT";
-            this.SDT.ReadOnly = true;
-            this.SDT.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.tenLopSv.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.tenLopSv.DataPropertyName = "tenLopSv";
+            this.tenLopSv.HeaderText = "Lớp";
+            this.tenLopSv.MaxInputLength = 10;
+            this.tenLopSv.Name = "tenLopSv";
+            this.tenLopSv.ReadOnly = true;
+            this.tenLopSv.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // Form_Xep_LopTinChi
             // 
@@ -287,19 +269,17 @@
         private System.Windows.Forms.Button btn_Them;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox txt_Ky;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox txt_Khoa;
+        private System.Windows.Forms.TextBox txt_MonHoc;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btn_Chon;
-        private System.Windows.Forms.TextBox txt_Lop;
+        private System.Windows.Forms.TextBox txt_Nam;
         private System.Windows.Forms.Label lbl_SoLuong;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.DataGridView dgv_SinhVien;
         private System.Windows.Forms.DataGridViewTextBoxColumn MaSv;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Ho;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Ten;
-        private System.Windows.Forms.DataGridViewTextBoxColumn DiaChi;
-        private System.Windows.Forms.DataGridViewTextBoxColumn SDT;
+        private System.Windows.Forms.DataGridViewTextBoxColumn tenSv;
+        private System.Windows.Forms.DataGridViewTextBoxColumn tenLopSv;
     }
 }

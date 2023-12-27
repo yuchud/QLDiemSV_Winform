@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace QLDiemSV_Winform.DTO
 {
-    internal class DangNhapDTO
+    internal class TaiKhoanDTO
     {
         private int userId;
         private string matKhau;
-        public DangNhapDTO() { }
+        public TaiKhoanDTO() { }
 
-        public DangNhapDTO(string userID, string matKhau)
+        public TaiKhoanDTO(string userID, string matKhau)
         {
             this.userId = Convert.ToInt32(userID);
             this.matKhau = matKhau;

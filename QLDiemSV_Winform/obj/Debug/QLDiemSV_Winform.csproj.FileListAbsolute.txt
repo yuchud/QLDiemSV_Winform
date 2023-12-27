@@ -80,3 +80,6 @@ D:\Workspace\CSharp\Microservices\Winform_DoAn\QLDiemSV_Winform\obj\Debug\QLDiem
 D:\Workspace\CSharp\Microservices\Winform_DoAn\QLDiemSV_Winform\obj\Debug\QLDiemSV_Winform.Form.Form_Tao_LopTinChi.resources
 D:\Workspace\CSharp\Microservices\Winform_DoAn\QLDiemSV_Winform\obj\Debug\QLDiemSV_Winform.SubForm.SubForm_Lay_MonHoc.resources
 D:\Workspace\CSharp\Microservices\Winform_DoAn\QLDiemSV_Winform\obj\Debug\QLDiemSV_Winform.Form.FormQuanLy.Form_Xep_LopTinChi.resources
+D:\Workspace\CSharp\Microservices\Winform_DoAn\QLDiemSV_Winform\obj\Debug\QLDiemSV_Winform.SubForm.SubForm_Lay_LopTinChi.resources
+D:\Workspace\CSharp\Microservices\Winform_DoAn\QLDiemSV_Winform\obj\Debug\QLDiemSV_Winform.SubForm.SubForm_Lay_SinhVien.resources
+D:\Workspace\CSharp\Microservices\Winform_DoAn\QLDiemSV_Winform\obj\Debug\QLDiemSV_Winform.Form.FormQuanLy.Form_Doi_MatKhau.resources

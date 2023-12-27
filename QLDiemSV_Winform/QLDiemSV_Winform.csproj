@@ -66,7 +66,8 @@
     <Compile Include="ApiController\MonHocApiController.cs" />
     <Compile Include="ApiController\SinhVienApiController.cs" />
     <Compile Include="DTO\BangDiemDTO.cs" />
-    <Compile Include="DTO\DangNhapDTO.cs" />
+    <Compile Include="DTO\BangDiemInfoDTO.cs" />
+    <Compile Include="DTO\TaiKhoanDTO.cs" />
     <Compile Include="DTO\GiangVienDTO.cs" />
     <Compile Include="DTO\KhoaDTO.cs" />
     <Compile Include="DTO\LopSinhVienDTO.cs" />
@@ -85,6 +86,12 @@
     </Compile>
     <Compile Include="Form\FormChinh.Designer.cs">
       <DependentUpon>FormChinh.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form\Form_Doi_MatKhau.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\Form_Doi_MatKhau.Designer.cs">
+      <DependentUpon>Form_Doi_MatKhau.cs</DependentUpon>
     </Compile>
     <Compile Include="Form\FormQuanLy\Form_QL_GiangVien.cs">
       <SubType>Form</SubType>
@@ -125,13 +132,24 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Secure\SecureStorage.cs" />
+    <Compile Include="SubForm\SubForm_Lay_LopTinChi.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SubForm\SubForm_Lay_LopTinChi.Designer.cs">
+      <DependentUpon>SubForm_Lay_LopTinChi.cs</DependentUpon>
+    </Compile>
     <Compile Include="SubForm\SubForm_Lay_MonHoc.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="SubForm\SubForm_Lay_MonHoc.Designer.cs">
       <DependentUpon>SubForm_Lay_MonHoc.cs</DependentUpon>
     </Compile>
-    <Compile Include="Support\StudentClassPairGenerator.cs" />
+    <Compile Include="SubForm\SubForm_Lay_SinhVien.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SubForm\SubForm_Lay_SinhVien.Designer.cs">
+      <DependentUpon>SubForm_Lay_SinhVien.cs</DependentUpon>
+    </Compile>
     <Compile Include="Support\SubjectPairGenerator.cs" />
     <Compile Include="Secure\TeacherDecentralization.cs" />
     <Compile Include="SubForm\SubForm_Lay_GiangVien.cs">
@@ -159,6 +177,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form\FormChinh.resx">
       <DependentUpon>FormChinh.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\Form_Doi_MatKhau.resx">
+      <DependentUpon>Form_Doi_MatKhau.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form\FormQuanLy\Form_QL_GiangVien.resx">
       <DependentUpon>Form_QL_GiangVien.cs</DependentUpon>
@@ -194,8 +215,14 @@
     <EmbeddedResource Include="SubForm\SubForm_Lay_LopSinhVien.resx">
       <DependentUpon>SubForm_Lay_LopSinhVien.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="SubForm\SubForm_Lay_LopTinChi.resx">
+      <DependentUpon>SubForm_Lay_LopTinChi.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="SubForm\SubForm_Lay_MonHoc.resx">
       <DependentUpon>SubForm_Lay_MonHoc.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SubForm\SubForm_Lay_SinhVien.resx">
+      <DependentUpon>SubForm_Lay_SinhVien.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

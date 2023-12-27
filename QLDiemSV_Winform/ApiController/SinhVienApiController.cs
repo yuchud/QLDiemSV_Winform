@@ -50,6 +50,21 @@ namespace QLDiemSV_Winform.ApiController
             return null;
         }
 
+        public static List<SinhVienDTO> GetListSinhVienByMaLopTinChi(int maLopTinChi)
+        {
+            using (var httpClient = new HttpClient())
+            {
+                HttpResponseMessage httpResponse = httpClient.GetAsync($"{Api_SinhVien_Url}/maLopTinChi={maLopTinChi}").Result;
+                if (httpResponse.IsSuccessStatusCode)
+                {
+                    string json = httpResponse.Content.ReadAsStringAsync().Result;
+                    List<SinhVienDTO> DsSinhVien = JsonConvert.DeserializeObject<List<SinhVienDTO>>(json);
+                    return DsSinhVien;
+                }
+            }
+            return null;
+        }
+
         public static HttpStatusCode PostSinhVien(SinhVienDTO sinhVien)
         {
             using (var httpClient = new HttpClient())

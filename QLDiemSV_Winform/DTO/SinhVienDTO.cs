@@ -17,8 +17,6 @@ namespace QLDiemSV_Winform.DTO
         private String diaChi;
         private String sdt;
         private int maLopSv;
-        [JsonIgnore]
-        private string tenLopSv;
 
         public SinhVienDTO()
         {

@@ -1,5 +1,6 @@
 ﻿using DevExpress.XtraBars;
 using QLDiemSV_Winform.Form;
+using QLDiemSV_Winform.Form.FormQuanLy;
 using QLDiemSV_Winform.Secure;
 using QLDiemSV_Winform.Support;
 using QLDiemSV_Winform.Validation;
@@ -39,15 +40,21 @@ namespace QLDiemSV_Winform
         private void loadDefaultForm()
         {
             btn_DangNhap.Visibility = BarItemVisibility.Always;
-            btn_DangXuat.Visibility = BarItemVisibility.Never;
-            rbp_QuanLy.Visible = false;
+            btn_DangXuat.Visibility = btn_DoiMatKhau.Visibility = BarItemVisibility.Never;
+            rbgp_NhanSu.Visible = rbpg_MonHoc.Visible = rbpg_Lop.Visible = rbpg_Diem.Visible = false;
         }
 
         private void loadQuanLyForm()
         {
-            rbp_QuanLy.Visible = true;
+            loadGiangVienForm();
+            rbgp_NhanSu.Visible = rbpg_MonHoc.Visible = rbpg_Lop.Visible = true;
+        }
+
+        private void loadGiangVienForm()
+        {
             btn_DangNhap.Visibility = BarItemVisibility.Never;
-            btn_DangXuat.Visibility = BarItemVisibility.Always;
+            btn_DangXuat.Visibility = btn_DoiMatKhau.Visibility = BarItemVisibility.Always;
+            rbpg_Diem.Visible = true;
         }
 
         public TabControl GetTabControl()
@@ -64,6 +71,10 @@ namespace QLDiemSV_Winform
             {
                 loadQuanLyForm();
 
+            }
+            else if (Quyen == EnumCode.Decentralization.GiangVien)
+            {
+                loadGiangVienForm();
             }
             else
             {
@@ -95,6 +106,16 @@ namespace QLDiemSV_Winform
         private void btn_QL_TaoLopTinChi_ItemClick(object sender, ItemClickEventArgs e)
         {
             TabManager.OpenForm(new Form_Tao_LopTinChi(), ConstantValues.TenFormTaoLopTinChi);
+        }
+
+        private void btn_XepLopTinChi_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            TabManager.OpenForm(new Form_Xep_LopTinChi(), ConstantValues.TenFormXepLopTinChi);
+        }
+
+        private void btn_DoiMatKhau_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            TabManager.OpenForm(new Form_Doi_MatKhau(), ConstantValues.TenFormDoiMatKhau);
         }
     }
 }

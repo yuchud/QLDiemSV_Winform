@@ -34,7 +34,7 @@ namespace QLDiemSV_Winform.ApiController
         }
 
 
-        public static List<BangDiemDTO> GetListBangDiemByMaLopTinChi(int maLopTc)
+        public static List<BangDiemInfoDTO> GetListBangDiemByMaLopTinChi(int maLopTc)
         {
             using (var httpClient = new HttpClient())
             {
@@ -42,7 +42,7 @@ namespace QLDiemSV_Winform.ApiController
                 if (httpResponse.IsSuccessStatusCode)
                 {
                     string json = httpResponse.Content.ReadAsStringAsync().Result;
-                    List<BangDiemDTO> DsBangDiem = JsonConvert.DeserializeObject<List<BangDiemDTO>>(json);
+                    List<BangDiemInfoDTO> DsBangDiem = JsonConvert.DeserializeObject<List<BangDiemInfoDTO>>(json);
                     return DsBangDiem;
                 }
             }
@@ -65,22 +65,22 @@ namespace QLDiemSV_Winform.ApiController
             return null;
         }
 
-        public static HttpStatusCode PostBangDiem(BangDiemDTO sinhVien)
+        public static HttpStatusCode PostBangDiem(BangDiemDTO bangDiem)
         {
             using (var httpClient = new HttpClient())
             {
-                string jsonBangDiem = JsonConvert.SerializeObject(sinhVien);
+                string jsonBangDiem = JsonConvert.SerializeObject(bangDiem);
                 HttpResponseMessage response = httpClient.PostAsync($"{Api_BangDiem_Url}", new StringContent(jsonBangDiem, System.Text.Encoding.UTF8, "application/json")).Result;
                 return response.StatusCode;
             }
         }
 
-        public static HttpStatusCode PutBangDiem(BangDiemDTO sinhVien)
+        public static HttpStatusCode PutBangDiem(BangDiemDTO bangDiem)
         {
             using (var httpClient = new HttpClient())
             {
-                string jsonBangDiem = JsonConvert.SerializeObject(sinhVien);
-                HttpResponseMessage response = httpClient.PutAsync($"{Api_BangDiem_Url}/{sinhVien.MaSv}", new StringContent(jsonBangDiem, System.Text.Encoding.UTF8, "application/json")).Result;
+                string jsonBangDiem = JsonConvert.SerializeObject(bangDiem);
+                HttpResponseMessage response = httpClient.PutAsync($"{Api_BangDiem_Url}/{bangDiem.MaBangDiem}", new StringContent(jsonBangDiem, System.Text.Encoding.UTF8, "application/json")).Result;
                 return response.StatusCode;
             }
         }
@@ -92,6 +92,25 @@ namespace QLDiemSV_Winform.ApiController
                 using (var httpClient = new HttpClient())
                 {
                     HttpResponseMessage httpResponse = httpClient.DeleteAsync($"{Api_BangDiem_Url}/{maBangDiem}").Result;
+                    return httpResponse.IsSuccessStatusCode || httpResponse.StatusCode == HttpStatusCode.NoContent ? EnumCode.ApiDeleteResult.Success : EnumCode.ApiDeleteResult.Failure;
+                }
+            }
+            catch (Exception ex)
+            {
+                // Handle exceptions or log errors as needed
+                Console.WriteLine($"Error deleting teacher: {ex.Message}");
+                return EnumCode.ApiDeleteResult.Failure;
+            }
+        }
+
+
+        public static EnumCode.ApiDeleteResult DeleteBangDiem(int maLopTC, int maSv)
+        {
+            try
+            {
+                using (var httpClient = new HttpClient())
+                {
+                    HttpResponseMessage httpResponse = httpClient.DeleteAsync($"{Api_BangDiem_Url}/maloptc={maLopTC}&masv={maSv}").Result;
                     return httpResponse.IsSuccessStatusCode || httpResponse.StatusCode == HttpStatusCode.NoContent ? EnumCode.ApiDeleteResult.Success : EnumCode.ApiDeleteResult.Failure;
                 }
             }

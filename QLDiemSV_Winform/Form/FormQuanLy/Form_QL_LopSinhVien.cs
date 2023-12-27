@@ -77,7 +77,6 @@ namespace QLDiemSV_Winform.Form
                         dgv_LopSinhVien_FillData(dataMaKhoa_Get());
                         dgv_LopSinhVien.Rows[currentSelectedRow].Selected = true;
                     }
-                    StudentClassPairGenerator.Reload();
                 } else
                 {
                     MessageBox.Show(

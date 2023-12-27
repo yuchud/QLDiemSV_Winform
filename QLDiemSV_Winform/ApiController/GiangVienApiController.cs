@@ -74,6 +74,17 @@ namespace QLDiemSV_Winform.Controller
             }
         }
 
+        public static HttpStatusCode PutMatKhau(TaiKhoanDTO taiKhoan)
+        {
+            using (var httpClient = new HttpClient())
+            {
+                string jsonTaiKhoan = JsonConvert.SerializeObject(taiKhoan);
+                HttpResponseMessage response = httpClient.PutAsync($"{Api_GiangVien_Url}/matKhau", new StringContent(jsonTaiKhoan, System.Text.Encoding.UTF8, "application/json")).Result;
+                return response.StatusCode;
+            }
+        }
+
+
         public static EnumCode.ApiDeleteResult DeleteGiangVien(int maGiangVien)
         {
             try
