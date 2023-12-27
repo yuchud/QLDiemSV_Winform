@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34330.188
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QLDiemSV_Winform", "QLDiemSV_Winform.csproj", "{E1344E08-6082-4E8F-AB5D-09DEE4A6488A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E1344E08-6082-4E8F-AB5D-09DEE4A6488A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E1344E08-6082-4E8F-AB5D-09DEE4A6488A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E1344E08-6082-4E8F-AB5D-09DEE4A6488A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E1344E08-6082-4E8F-AB5D-09DEE4A6488A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A32FC6DB-E3CE-464F-87FB-B9CD17F5A496}
+	EndGlobalSection
+EndGlobal
