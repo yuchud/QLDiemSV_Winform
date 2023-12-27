@@ -131,6 +131,7 @@
     <Compile Include="SubForm\SubForm_Lay_MonHoc.Designer.cs">
       <DependentUpon>SubForm_Lay_MonHoc.cs</DependentUpon>
     </Compile>
+    <Compile Include="Support\StudentClassPairGenerator.cs" />
     <Compile Include="Support\SubjectPairGenerator.cs" />
     <Compile Include="Secure\TeacherDecentralization.cs" />
     <Compile Include="SubForm\SubForm_Lay_GiangVien.cs">

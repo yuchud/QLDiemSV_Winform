@@ -33,6 +33,8 @@
             this.btn_Thoat = new System.Windows.Forms.Button();
             this.btn_Them = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.label4 = new System.Windows.Forms.Label();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.txt_Khoa = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -40,10 +42,15 @@
             this.txt_Lop = new System.Windows.Forms.TextBox();
             this.lbl_SoLuong = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.dgv_SinhVien = new System.Windows.Forms.DataGridView();
+            this.MaSv = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Ho = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Ten = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DiaChi = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.SDT = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv_SinhVien)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
@@ -104,6 +111,23 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(954, 74);
             this.panel2.TabIndex = 6;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(156, 32);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(23, 13);
+            this.label4.TabIndex = 12;
+            this.label4.Text = "Kỳ:";
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(185, 29);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.ReadOnly = true;
+            this.textBox1.Size = new System.Drawing.Size(25, 21);
+            this.textBox1.TabIndex = 11;
             // 
             // label3
             // 
@@ -166,28 +190,83 @@
             this.label1.TabIndex = 4;
             this.label1.Text = "Số Lượng:";
             // 
-            // label4
+            // dgv_SinhVien
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(156, 32);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(23, 13);
-            this.label4.TabIndex = 12;
-            this.label4.Text = "Kỳ:";
+            this.dgv_SinhVien.AllowUserToOrderColumns = true;
+            this.dgv_SinhVien.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgv_SinhVien.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgv_SinhVien.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.MaSv,
+            this.Ho,
+            this.Ten,
+            this.DiaChi,
+            this.SDT});
+            this.dgv_SinhVien.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgv_SinhVien.Location = new System.Drawing.Point(0, 106);
+            this.dgv_SinhVien.MultiSelect = false;
+            this.dgv_SinhVien.Name = "dgv_SinhVien";
+            this.dgv_SinhVien.ReadOnly = true;
+            this.dgv_SinhVien.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgv_SinhVien.Size = new System.Drawing.Size(954, 397);
+            this.dgv_SinhVien.TabIndex = 8;
+            this.dgv_SinhVien.TabStop = false;
             // 
-            // textBox1
+            // MaSv
             // 
-            this.textBox1.Location = new System.Drawing.Point(185, 29);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.ReadOnly = true;
-            this.textBox1.Size = new System.Drawing.Size(25, 21);
-            this.textBox1.TabIndex = 11;
+            this.MaSv.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.MaSv.DataPropertyName = "maSv";
+            this.MaSv.HeaderText = "Mã Sinh Viên";
+            this.MaSv.MaxInputLength = 10;
+            this.MaSv.Name = "MaSv";
+            this.MaSv.ReadOnly = true;
+            this.MaSv.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.MaSv.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // Ho
+            // 
+            this.Ho.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Ho.DataPropertyName = "ho";
+            this.Ho.HeaderText = "Họ";
+            this.Ho.MaxInputLength = 20;
+            this.Ho.Name = "Ho";
+            this.Ho.ReadOnly = true;
+            this.Ho.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // Ten
+            // 
+            this.Ten.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Ten.DataPropertyName = "ten";
+            this.Ten.HeaderText = "Tên";
+            this.Ten.MaxInputLength = 10;
+            this.Ten.Name = "Ten";
+            this.Ten.ReadOnly = true;
+            this.Ten.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // DiaChi
+            // 
+            this.DiaChi.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.DiaChi.DataPropertyName = "diaChi";
+            this.DiaChi.HeaderText = "Địa Chỉ";
+            this.DiaChi.Name = "DiaChi";
+            this.DiaChi.ReadOnly = true;
+            this.DiaChi.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // SDT
+            // 
+            this.SDT.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.SDT.DataPropertyName = "sdt";
+            this.SDT.HeaderText = "SDT";
+            this.SDT.MaxInputLength = 14;
+            this.SDT.Name = "SDT";
+            this.SDT.ReadOnly = true;
+            this.SDT.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // Form_Xep_LopTinChi
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(954, 503);
+            this.Controls.Add(this.dgv_SinhVien);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.Name = "Form_Xep_LopTinChi";
@@ -195,6 +274,7 @@
             this.panel1.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv_SinhVien)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -215,5 +295,11 @@
         private System.Windows.Forms.TextBox txt_Lop;
         private System.Windows.Forms.Label lbl_SoLuong;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.DataGridView dgv_SinhVien;
+        private System.Windows.Forms.DataGridViewTextBoxColumn MaSv;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Ho;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Ten;
+        private System.Windows.Forms.DataGridViewTextBoxColumn DiaChi;
+        private System.Windows.Forms.DataGridViewTextBoxColumn SDT;
     }
 }

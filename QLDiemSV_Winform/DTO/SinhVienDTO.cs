@@ -19,8 +19,14 @@ namespace QLDiemSV_Winform.DTO
         private int maLopSv;
         [JsonIgnore]
         private string tenLopSv;
+
         public SinhVienDTO()
         {
+        }
+
+        private void GenerateTenLopSV()
+        {
+
         }
 
         public SinhVienDTO(int maSv, string ho, string ten, string diaChi, string sdt, int maLopSv)
