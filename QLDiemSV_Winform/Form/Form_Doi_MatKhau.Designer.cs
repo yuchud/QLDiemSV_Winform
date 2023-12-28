@@ -134,7 +134,6 @@
             this.txt_MatKhau.Name = "txt_MatKhau";
             this.txt_MatKhau.Size = new System.Drawing.Size(215, 21);
             this.txt_MatKhau.TabIndex = 1;
-            this.txt_MatKhau.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txt_MatKhau_KeyPress);
             // 
             // Form_Doi_MatKhau
             // 

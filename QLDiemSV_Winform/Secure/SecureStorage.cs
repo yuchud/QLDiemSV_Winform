@@ -1,6 +1,5 @@
 ﻿using CredentialManagement;
 using QLDiemSV_Winform.Controller;
-using QLDiemSV_Winform.DTO;
 using QLDiemSV_Winform.Validation;
 using System;
 using System.Linq;
@@ -12,7 +11,25 @@ namespace QLDiemSV_Winform.Secure
     {
         private static EnumCode.Decentralization quyen = EnumCode.Decentralization.None;
 
-        public static EnumCode.Decentralization Quyen { get => quyen; }
+        public static bool ChangePassword(string matKhauMoi)
+        {
+            using (var credential = new Credential { Target = "MyAppCredential" })
+            {
+                if (credential.Load())
+                {
+                    HttpStatusCode httpStatusCode = GiangVienApiController.PutMatKhau(
+                        new DTO.TaiKhoanDTO(credential.Username, matKhauMoi));
+                    bool isChangeSuccessful = StatusCodeChecker.GetResponseClass(httpStatusCode) ==
+                        EnumCode.HTTPResponseStatusClass.SuccessfulResponses;
+                    if (isChangeSuccessful)
+                    {
+                        credential.Password = matKhauMoi;
+                        return true;
+                    }
+                }
+                return false;
+            }
+        }
 
         public static void ClearCredentials()
         {
@@ -33,6 +50,16 @@ namespace QLDiemSV_Winform.Secure
             }
         }
 
+        public static string GetTenDangNhap()
+        {
+            using (var credential = new Credential { Target = "MyAppCredential" })
+            {
+                if (credential.Load())
+                    return credential.Username;
+                return null;
+            }
+        }
+
         public static void SaveCredentials(string tenDangNhap, string matKhau)
         {
             using (var credential = new Credential())
@@ -46,32 +73,6 @@ namespace QLDiemSV_Winform.Secure
             }
         }
 
-        public static bool ChangePassword(string matKhauMoi)
-        {
-            using (var credential = new Credential { Target = "MyAppCredential" })
-            {
-                if (credential.Load())
-                {
-                    HttpStatusCode httpStatusCode = GiangVienApiController.PutMatKhau(new DTO.TaiKhoanDTO(credential.Username, matKhauMoi));
-                    bool isChangeSuccessful = StatusCodeChecker.GetResponseClass(httpStatusCode) == EnumCode.HTTPResponseStatusClass.SuccessfulResponses;
-                    if(isChangeSuccessful)
-                    {
-                        credential.Password = matKhauMoi;
-                        return true;
-                    }
-                }
-                return false;
-            }
-        }
-
-        public static string GetTenDangNhap()
-        {
-            using (var credential = new Credential { Target = "MyAppCredential" })
-            {
-                if (credential.Load())
-                    return credential.Username;
-                return null;
-            }
-        }
+        public static EnumCode.Decentralization Quyen { get => quyen; }
     }
 }

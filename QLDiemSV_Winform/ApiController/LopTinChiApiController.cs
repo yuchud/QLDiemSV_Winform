@@ -4,32 +4,37 @@ using QLDiemSV_Winform.Validation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
+using System.Net.Http;
 
 namespace QLDiemSV_Winform.ApiController
 {
     internal class LopTinChiApiController
     {
         private static readonly string Api_LopTinChi_Url = Program.ApiBaseUrl + "/LopTinChi";
-        public LopTinChiApiController() { }
 
-        public static LopTinChiDTO GetLopTinChi(int maLopTinChi)
+        public LopTinChiApiController()
         {
-            using (var httpClient = new HttpClient())
-            {
-                HttpResponseMessage httpResponse = httpClient.GetAsync($"{Api_LopTinChi_Url}/{maLopTinChi}").Result;
-                if (httpResponse.IsSuccessStatusCode)
-                {
-                    string json = httpResponse.Content.ReadAsStringAsync().Result;
-                    LopTinChiDTO LopTinChi = JsonConvert.DeserializeObject<LopTinChiDTO>(json);
+        }
 
-                    return LopTinChi;
+        public static EnumCode.ApiDeleteResult DeleteLopTinChi(int maLopTinChi)
+        {
+            try
+            {
+                using (var httpClient = new HttpClient())
+                {
+                    HttpResponseMessage httpResponse = httpClient.DeleteAsync($"{Api_LopTinChi_Url}/{maLopTinChi}")
+                        .Result;
+                    return httpResponse.IsSuccessStatusCode || httpResponse.StatusCode == HttpStatusCode.NoContent
+                        ? EnumCode.ApiDeleteResult.Success
+                        : EnumCode.ApiDeleteResult.Failure;
                 }
+            } catch (Exception ex)
+            {
+                // Handle exceptions or log errors as needed
+                Console.WriteLine($"Error deleting teacher: {ex.Message}");
+                return EnumCode.ApiDeleteResult.Failure;
             }
-            return null;
         }
 
 
@@ -78,12 +83,31 @@ namespace QLDiemSV_Winform.ApiController
             return null;
         }
 
+        public static LopTinChiDTO GetLopTinChi(int maLopTinChi)
+        {
+            using (var httpClient = new HttpClient())
+            {
+                HttpResponseMessage httpResponse = httpClient.GetAsync($"{Api_LopTinChi_Url}/{maLopTinChi}").Result;
+                if (httpResponse.IsSuccessStatusCode)
+                {
+                    string json = httpResponse.Content.ReadAsStringAsync().Result;
+                    LopTinChiDTO LopTinChi = JsonConvert.DeserializeObject<LopTinChiDTO>(json);
+
+                    return LopTinChi;
+                }
+            }
+            return null;
+        }
+
         public static HttpStatusCode PostLopTinChi(LopTinChiDTO lopTinChi)
         {
             using (var httpClient = new HttpClient())
             {
                 string jsonLopTinChi = JsonConvert.SerializeObject(lopTinChi);
-                HttpResponseMessage response = httpClient.PostAsync($"{Api_LopTinChi_Url}", new StringContent(jsonLopTinChi, System.Text.Encoding.UTF8, "application/json")).Result;
+                HttpResponseMessage response = httpClient.PostAsync(
+                    $"{Api_LopTinChi_Url}",
+                    new StringContent(jsonLopTinChi, System.Text.Encoding.UTF8, "application/json"))
+                    .Result;
                 return response.StatusCode;
             }
         }
@@ -93,26 +117,11 @@ namespace QLDiemSV_Winform.ApiController
             using (var httpClient = new HttpClient())
             {
                 string jsonLopTinChi = JsonConvert.SerializeObject(lopTinChi);
-                HttpResponseMessage response = httpClient.PutAsync($"{Api_LopTinChi_Url}/{lopTinChi.MaLopTc}", new StringContent(jsonLopTinChi, System.Text.Encoding.UTF8, "application/json")).Result;
+                HttpResponseMessage response = httpClient.PutAsync(
+                    $"{Api_LopTinChi_Url}/{lopTinChi.MaLopTc}",
+                    new StringContent(jsonLopTinChi, System.Text.Encoding.UTF8, "application/json"))
+                    .Result;
                 return response.StatusCode;
-            }
-        }
-
-        public static EnumCode.ApiDeleteResult DeleteLopTinChi(int maLopTinChi)
-        {
-            try
-            {
-                using (var httpClient = new HttpClient())
-                {
-                    HttpResponseMessage httpResponse = httpClient.DeleteAsync($"{Api_LopTinChi_Url}/{maLopTinChi}").Result;
-                    return httpResponse.IsSuccessStatusCode || httpResponse.StatusCode == HttpStatusCode.NoContent ? EnumCode.ApiDeleteResult.Success : EnumCode.ApiDeleteResult.Failure;
-                }
-            }
-            catch (Exception ex)
-            {
-                // Handle exceptions or log errors as needed
-                Console.WriteLine($"Error deleting teacher: {ex.Message}");
-                return EnumCode.ApiDeleteResult.Failure;
             }
         }
     }

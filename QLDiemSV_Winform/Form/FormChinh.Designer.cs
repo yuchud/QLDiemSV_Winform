@@ -41,19 +41,19 @@
             this.btn_DangNhap = new DevExpress.XtraBars.BarButtonItem();
             this.btn_DangXuat = new DevExpress.XtraBars.BarButtonItem();
             this.btn_DoiMatKhau = new DevExpress.XtraBars.BarButtonItem();
+            this.btn_NhapDiem = new DevExpress.XtraBars.BarButtonItem();
             this.rbg_HeThong = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.tbgp_TaiKhoan = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.rbpg_MonHoc = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.rbgp_NhanSu = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.rbpg_Lop = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+            this.rbpg_Diem = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonStatusBar = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.btn_XepLop = new DevExpress.XtraBars.BarButtonItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.tssl_Ma = new System.Windows.Forms.ToolStripStatusLabel();
             this.ribbonPageGroup4 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
-            this.rbpg_Diem = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
-            this.btn_NhapDiem = new DevExpress.XtraBars.BarButtonItem();
             ((System.ComponentModel.ISupportInitialize)(this.ribbon)).BeginInit();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -185,6 +185,16 @@
             this.btn_DoiMatKhau.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.SmallWithText;
             this.btn_DoiMatKhau.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btn_DoiMatKhau_ItemClick);
             // 
+            // btn_NhapDiem
+            // 
+            this.btn_NhapDiem.Caption = "Nhập điểm";
+            this.btn_NhapDiem.Id = 20;
+            this.btn_NhapDiem.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btn_NhapDiem.ImageOptions.Image")));
+            this.btn_NhapDiem.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("btn_NhapDiem.ImageOptions.LargeImage")));
+            this.btn_NhapDiem.Name = "btn_NhapDiem";
+            this.btn_NhapDiem.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.SmallWithText;
+            this.btn_NhapDiem.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btn_NhapDiem_ItemClick);
+            // 
             // rbg_HeThong
             // 
             this.rbg_HeThong.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
@@ -224,6 +234,12 @@
             this.rbpg_Lop.ItemLinks.Add(this.btn_XepLopTinChi);
             this.rbpg_Lop.Name = "rbpg_Lop";
             this.rbpg_Lop.Text = "Lớp";
+            // 
+            // rbpg_Diem
+            // 
+            this.rbpg_Diem.ItemLinks.Add(this.btn_NhapDiem);
+            this.rbpg_Diem.Name = "rbpg_Diem";
+            this.rbpg_Diem.Text = "Điểm";
             // 
             // ribbonStatusBar
             // 
@@ -273,21 +289,6 @@
             this.ribbonPageGroup4.Name = "ribbonPageGroup4";
             this.ribbonPageGroup4.Text = "ribbonPageGroup4";
             // 
-            // rbpg_Diem
-            // 
-            this.rbpg_Diem.ItemLinks.Add(this.btn_NhapDiem);
-            this.rbpg_Diem.Name = "rbpg_Diem";
-            this.rbpg_Diem.Text = "Điểm";
-            // 
-            // btn_NhapDiem
-            // 
-            this.btn_NhapDiem.Caption = "Nhập điểm";
-            this.btn_NhapDiem.Id = 20;
-            this.btn_NhapDiem.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btn_NhapDiem.ImageOptions.Image")));
-            this.btn_NhapDiem.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("btn_NhapDiem.ImageOptions.LargeImage")));
-            this.btn_NhapDiem.Name = "btn_NhapDiem";
-            this.btn_NhapDiem.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.SmallWithText;
-            // 
             // FormChinh
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -314,7 +315,6 @@
 
         private DevExpress.XtraBars.Ribbon.RibbonControl ribbon;
         private DevExpress.XtraBars.Ribbon.RibbonPage rbg_HeThong;
-        private DevExpress.XtraBars.Ribbon.RibbonPageGroup rbgp_MonHoc;
         private DevExpress.XtraBars.Ribbon.RibbonStatusBar ribbonStatusBar;
         private DevExpress.XtraBars.BarButtonItem btn_QL_LopSinhVien;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup rbgp_NhanSu;

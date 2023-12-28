@@ -6,8 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace QLDiemSV_Winform.Controller
 {
@@ -18,6 +16,28 @@ namespace QLDiemSV_Winform.Controller
         public GiangVienApiController()
         {
         }
+
+
+        public static EnumCode.ApiDeleteResult DeleteGiangVien(int maGiangVien)
+        {
+            try
+            {
+                using (var httpClient = new HttpClient())
+                {
+                    HttpResponseMessage httpResponse = httpClient.DeleteAsync($"{Api_GiangVien_Url}/{maGiangVien}")
+                        .Result;
+                    return httpResponse.IsSuccessStatusCode || httpResponse.StatusCode == HttpStatusCode.NoContent
+                        ? EnumCode.ApiDeleteResult.Success
+                        : EnumCode.ApiDeleteResult.Failure;
+                }
+            } catch (Exception ex)
+            {
+                // Handle exceptions or log errors as needed
+                Console.WriteLine($"Error deleting teacher: {ex.Message}");
+                return EnumCode.ApiDeleteResult.Failure;
+            }
+        }
+
         public static GiangVienDTO GetGiangVien(int maGiangVien)
         {
             using (var httpClient = new HttpClient())
@@ -59,7 +79,10 @@ namespace QLDiemSV_Winform.Controller
             using (var httpClient = new HttpClient())
             {
                 string jsonGiangVien = JsonConvert.SerializeObject(giangVien);
-                HttpResponseMessage response = httpClient.PostAsync($"{Api_GiangVien_Url}", new StringContent(jsonGiangVien, System.Text.Encoding.UTF8, "application/json")).Result;
+                HttpResponseMessage response = httpClient.PostAsync(
+                    $"{Api_GiangVien_Url}",
+                    new StringContent(jsonGiangVien, System.Text.Encoding.UTF8, "application/json"))
+                    .Result;
                 return response.StatusCode;
             }
         }
@@ -69,7 +92,10 @@ namespace QLDiemSV_Winform.Controller
             using (var httpClient = new HttpClient())
             {
                 string jsonGiangVien = JsonConvert.SerializeObject(giangVien);
-                HttpResponseMessage response = httpClient.PutAsync($"{Api_GiangVien_Url}", new StringContent(jsonGiangVien, System.Text.Encoding.UTF8, "application/json")).Result;
+                HttpResponseMessage response = httpClient.PutAsync(
+                    $"{Api_GiangVien_Url}",
+                    new StringContent(jsonGiangVien, System.Text.Encoding.UTF8, "application/json"))
+                    .Result;
                 return response.StatusCode;
             }
         }
@@ -79,27 +105,11 @@ namespace QLDiemSV_Winform.Controller
             using (var httpClient = new HttpClient())
             {
                 string jsonTaiKhoan = JsonConvert.SerializeObject(taiKhoan);
-                HttpResponseMessage response = httpClient.PutAsync($"{Api_GiangVien_Url}/matKhau", new StringContent(jsonTaiKhoan, System.Text.Encoding.UTF8, "application/json")).Result;
+                HttpResponseMessage response = httpClient.PutAsync(
+                    $"{Api_GiangVien_Url}/matKhau",
+                    new StringContent(jsonTaiKhoan, System.Text.Encoding.UTF8, "application/json"))
+                    .Result;
                 return response.StatusCode;
-            }
-        }
-
-
-        public static EnumCode.ApiDeleteResult DeleteGiangVien(int maGiangVien)
-        {
-            try
-            {
-                using (var httpClient = new HttpClient())
-                {
-                    HttpResponseMessage httpResponse = httpClient.DeleteAsync($"{Api_GiangVien_Url}/{maGiangVien}").Result;
-                    return httpResponse.IsSuccessStatusCode || httpResponse.StatusCode == HttpStatusCode.NoContent ? EnumCode.ApiDeleteResult.Success : EnumCode.ApiDeleteResult.Failure;
-                }
-            }
-            catch (Exception ex)
-            {
-                // Handle exceptions or log errors as needed
-                Console.WriteLine($"Error deleting teacher: {ex.Message}");
-                return EnumCode.ApiDeleteResult.Failure;
             }
         }
     }

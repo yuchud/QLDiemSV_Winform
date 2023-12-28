@@ -83,3 +83,4 @@ D:\Workspace\CSharp\Microservices\Winform_DoAn\QLDiemSV_Winform\obj\Debug\QLDiem
 D:\Workspace\CSharp\Microservices\Winform_DoAn\QLDiemSV_Winform\obj\Debug\QLDiemSV_Winform.SubForm.SubForm_Lay_LopTinChi.resources
 D:\Workspace\CSharp\Microservices\Winform_DoAn\QLDiemSV_Winform\obj\Debug\QLDiemSV_Winform.SubForm.SubForm_Lay_SinhVien.resources
 D:\Workspace\CSharp\Microservices\Winform_DoAn\QLDiemSV_Winform\obj\Debug\QLDiemSV_Winform.Form.FormQuanLy.Form_Doi_MatKhau.resources
+D:\Workspace\CSharp\Microservices\Winform_DoAn\QLDiemSV_Winform\obj\Debug\QLDiemSV_Winform.SubForm.Form_Nhap_DiemSinhVien.resources

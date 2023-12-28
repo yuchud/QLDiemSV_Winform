@@ -4,10 +4,8 @@ using QLDiemSV_Winform.Validation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
+using System.Net.Http;
 
 namespace QLDiemSV_Winform.ApiController
 {
@@ -18,20 +16,24 @@ namespace QLDiemSV_Winform.ApiController
         public SinhVienApiController()
         {
         }
-        public static SinhVienDTO GetSinhVien(int maSinhVien)
-        {
-            using (var httpClient = new HttpClient())
-            {
-                HttpResponseMessage httpResponse = httpClient.GetAsync($"{Api_SinhVien_Url}/{maSinhVien}").Result;
-                if (httpResponse.IsSuccessStatusCode)
-                {
-                    string json = httpResponse.Content.ReadAsStringAsync().Result;
-                    SinhVienDTO SinhVien = JsonConvert.DeserializeObject<SinhVienDTO>(json);
 
-                    return SinhVien;
+        public static EnumCode.ApiDeleteResult DeleteSinhVien(int maSinhVien)
+        {
+            try
+            {
+                using (var httpClient = new HttpClient())
+                {
+                    HttpResponseMessage httpResponse = httpClient.DeleteAsync($"{Api_SinhVien_Url}/{maSinhVien}").Result;
+                    return httpResponse.IsSuccessStatusCode || httpResponse.StatusCode == HttpStatusCode.NoContent
+                        ? EnumCode.ApiDeleteResult.Success
+                        : EnumCode.ApiDeleteResult.Failure;
                 }
+            } catch (Exception ex)
+            {
+                // Handle exceptions or log errors as needed
+                Console.WriteLine($"Error deleting teacher: {ex.Message}");
+                return EnumCode.ApiDeleteResult.Failure;
             }
-            return null;
         }
 
 
@@ -54,7 +56,8 @@ namespace QLDiemSV_Winform.ApiController
         {
             using (var httpClient = new HttpClient())
             {
-                HttpResponseMessage httpResponse = httpClient.GetAsync($"{Api_SinhVien_Url}/maLopTinChi={maLopTinChi}").Result;
+                HttpResponseMessage httpResponse = httpClient.GetAsync($"{Api_SinhVien_Url}/maLopTinChi={maLopTinChi}")
+                    .Result;
                 if (httpResponse.IsSuccessStatusCode)
                 {
                     string json = httpResponse.Content.ReadAsStringAsync().Result;
@@ -65,12 +68,31 @@ namespace QLDiemSV_Winform.ApiController
             return null;
         }
 
+        public static SinhVienDTO GetSinhVien(int maSinhVien)
+        {
+            using (var httpClient = new HttpClient())
+            {
+                HttpResponseMessage httpResponse = httpClient.GetAsync($"{Api_SinhVien_Url}/{maSinhVien}").Result;
+                if (httpResponse.IsSuccessStatusCode)
+                {
+                    string json = httpResponse.Content.ReadAsStringAsync().Result;
+                    SinhVienDTO SinhVien = JsonConvert.DeserializeObject<SinhVienDTO>(json);
+
+                    return SinhVien;
+                }
+            }
+            return null;
+        }
+
         public static HttpStatusCode PostSinhVien(SinhVienDTO sinhVien)
         {
             using (var httpClient = new HttpClient())
             {
                 string jsonSinhVien = JsonConvert.SerializeObject(sinhVien);
-                HttpResponseMessage response = httpClient.PostAsync($"{Api_SinhVien_Url}", new StringContent(jsonSinhVien, System.Text.Encoding.UTF8, "application/json")).Result;
+                HttpResponseMessage response = httpClient.PostAsync(
+                    $"{Api_SinhVien_Url}",
+                    new StringContent(jsonSinhVien, System.Text.Encoding.UTF8, "application/json"))
+                    .Result;
                 return response.StatusCode;
             }
         }
@@ -80,26 +102,11 @@ namespace QLDiemSV_Winform.ApiController
             using (var httpClient = new HttpClient())
             {
                 string jsonSinhVien = JsonConvert.SerializeObject(sinhVien);
-                HttpResponseMessage response = httpClient.PutAsync($"{Api_SinhVien_Url}/{sinhVien.MaSv}", new StringContent(jsonSinhVien, System.Text.Encoding.UTF8, "application/json")).Result;
+                HttpResponseMessage response = httpClient.PutAsync(
+                    $"{Api_SinhVien_Url}/{sinhVien.MaSv}",
+                    new StringContent(jsonSinhVien, System.Text.Encoding.UTF8, "application/json"))
+                    .Result;
                 return response.StatusCode;
-            }
-        }
-
-        public static EnumCode.ApiDeleteResult DeleteSinhVien(int maSinhVien)
-        {
-            try
-            {
-                using (var httpClient = new HttpClient())
-                {
-                    HttpResponseMessage httpResponse = httpClient.DeleteAsync($"{Api_SinhVien_Url}/{maSinhVien}").Result;
-                    return httpResponse.IsSuccessStatusCode || httpResponse.StatusCode == HttpStatusCode.NoContent ? EnumCode.ApiDeleteResult.Success : EnumCode.ApiDeleteResult.Failure;
-                }
-            }
-            catch (Exception ex)
-            {
-                // Handle exceptions or log errors as needed
-                Console.WriteLine($"Error deleting teacher: {ex.Message}");
-                return EnumCode.ApiDeleteResult.Failure;
             }
         }
     }

@@ -3,7 +3,8 @@ using System.Linq;
 
 namespace QLDiemSV_Winform.Validation
 {
-    public class EnumCode {
+    public class EnumCode
+    {
         public enum ApiDeleteResult
         {
             Success,
@@ -17,7 +18,8 @@ namespace QLDiemSV_Winform.Validation
             NhanVien
         }
 
-        public enum HTTPResponseStatusClass {
+        public enum HTTPResponseStatusClass
+        {
             InformationalResponses,
             SuccessfulResponses,
             RedirectionMessages,

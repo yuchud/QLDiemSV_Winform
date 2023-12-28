@@ -1,30 +1,12 @@
-﻿using Newtonsoft.Json;
-using QLDiemSV_Winform.Secure;
-using QLDiemSV_Winform.Validation;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace QLDiemSV_Winform.DTO
 {
     internal class SinhVienDTO
     {
-        private int maSv;
-        private string ho;
-        private String ten;
-        private String diaChi;
-        private String sdt;
-        private int maLopSv;
-
         public SinhVienDTO()
         {
-        }
-
-        private void GenerateTenLopSV()
-        {
-
         }
 
         public SinhVienDTO(int maSv, string ho, string ten, string diaChi, string sdt, int maLopSv)
@@ -37,11 +19,16 @@ namespace QLDiemSV_Winform.DTO
             this.MaLopSv = maLopSv;
         }
 
-        public int MaSv { get => maSv; set => maSv = value; }
-        public string Ho { get => ho; set => ho = value; }
-        public string Ten { get => ten; set => ten = value; }
-        public string DiaChi { get => diaChi; set => diaChi = value; }
-        public string Sdt { get => sdt; set => sdt = value; }
-        public int MaLopSv { get => maLopSv; set => maLopSv = value; }
+        public string DiaChi { get; set; }
+
+        public string Ho { get; set; }
+
+        public int MaLopSv { get; set; }
+
+        public int MaSv { get; set; }
+
+        public string Sdt { get; set; }
+
+        public string Ten { get; set; }
     }
 }

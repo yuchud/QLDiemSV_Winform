@@ -4,8 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace QLDiemSV_Winform.ApiController
 {
@@ -13,7 +11,9 @@ namespace QLDiemSV_Winform.ApiController
     {
         private static readonly string Api_Khoa_Url = Program.ApiBaseUrl + "/Khoa";
 
-        public KhoaApiController() { }
+        public KhoaApiController()
+        {
+        }
 
 
         public static List<KhoaDTO> GetAllKhoa()
@@ -30,8 +30,7 @@ namespace QLDiemSV_Winform.ApiController
                     }
                     return null;
                 }
-            }
-            catch (Exception ex)
+            } catch (Exception ex)
             {
                 Console.WriteLine($"Error Get all Khoa: {ex.Message}");
                 return null;

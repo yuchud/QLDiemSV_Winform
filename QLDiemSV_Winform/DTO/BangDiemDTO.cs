@@ -1,25 +1,24 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace QLDiemSV_Winform.DTO
 {
     internal class BangDiemDTO
     {
-        private int maBangDiem;
-        private int maLopTc;
-        private int maSv;
-        private double chuyenCan;
-        private double baiTap;
-        private double kiemTra;
-        private double thucHanh;
-        private double thi;
-        private double tongKet;
-        public BangDiemDTO() { }
+        public BangDiemDTO()
+        {
+        }
 
-        public BangDiemDTO(int maBangDiem, int maLopTc, int maSv, double chuyenCan, double baiTap, double kiemTra, double thucHanh, double thi, double tongKet)
+        public BangDiemDTO(
+            int maBangDiem,
+            int maLopTc,
+            int maSv,
+            double chuyenCan,
+            double baiTap,
+            double kiemTra,
+            double thucHanh,
+            double thi,
+            double tongKet)
         {
             this.MaBangDiem = maBangDiem;
             this.MaLopTc = maLopTc;
@@ -32,14 +31,23 @@ namespace QLDiemSV_Winform.DTO
             this.TongKet = tongKet;
         }
 
-        public int MaBangDiem { get => maBangDiem; set => maBangDiem = value; }
-        public int MaLopTc { get => maLopTc; set => maLopTc = value; }
-        public int MaSv { get => maSv; set => maSv = value; }
-        public double ChuyenCan { get => chuyenCan; set => chuyenCan = value; }
-        public double BaiTap { get => baiTap; set => baiTap = value; }
-        public double KiemTra { get => kiemTra; set => kiemTra = value; }
-        public double ThucHanh { get => thucHanh; set => thucHanh = value; }
-        public double Thi { get => thi; set => thi = value; }
-        public double TongKet { get => tongKet; set => tongKet = value; }
+        public int MaBangDiem { get; set; }
+
+        public int MaLopTc { get; set; }
+
+        public int MaSv { get; set; }
+
+        public double ChuyenCan { get; set; }
+
+        public double BaiTap { get; set; }
+
+        public double KiemTra { get; set; }
+
+        public double ThucHanh { get; set; }
+
+        public double Thi { get; set; }
+
+
+        public double TongKet { get; set; }
     }
 }

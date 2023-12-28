@@ -4,10 +4,8 @@ using QLDiemSV_Winform.Validation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
+using System.Net.Http;
 
 namespace QLDiemSV_Winform.ApiController
 {
@@ -18,20 +16,24 @@ namespace QLDiemSV_Winform.ApiController
         public MonHocApiController()
         {
         }
-        public static MonHocDTO GetMonHoc(int maMonHoc)
-        {
-            using (var httpClient = new HttpClient())
-            {
-                HttpResponseMessage httpResponse = httpClient.GetAsync($"{Api_MonHoc_Url}/{maMonHoc}").Result;
-                if (httpResponse.IsSuccessStatusCode)
-                {
-                    string json = httpResponse.Content.ReadAsStringAsync().Result;
-                    MonHocDTO MonHoc = JsonConvert.DeserializeObject<MonHocDTO>(json);
 
-                    return MonHoc;
+        public static EnumCode.ApiDeleteResult DeleteMonHoc(int maMonHoc)
+        {
+            try
+            {
+                using (var httpClient = new HttpClient())
+                {
+                    HttpResponseMessage httpResponse = httpClient.DeleteAsync($"{Api_MonHoc_Url}/{maMonHoc}").Result;
+                    return httpResponse.IsSuccessStatusCode || httpResponse.StatusCode == HttpStatusCode.NoContent
+                        ? EnumCode.ApiDeleteResult.Success
+                        : EnumCode.ApiDeleteResult.Failure;
                 }
+            } catch (Exception ex)
+            {
+                // Handle exceptions or log errors as needed
+                Console.WriteLine($"Error deleting teacher: {ex.Message}");
+                return EnumCode.ApiDeleteResult.Failure;
             }
-            return null;
         }
 
         public static List<MonHocDTO> GetListMonHoc()
@@ -49,6 +51,21 @@ namespace QLDiemSV_Winform.ApiController
             return null;
         }
 
+        public static MonHocDTO GetMonHoc(int maMonHoc)
+        {
+            using (var httpClient = new HttpClient())
+            {
+                HttpResponseMessage httpResponse = httpClient.GetAsync($"{Api_MonHoc_Url}/{maMonHoc}").Result;
+                if (httpResponse.IsSuccessStatusCode)
+                {
+                    string json = httpResponse.Content.ReadAsStringAsync().Result;
+                    MonHocDTO MonHoc = JsonConvert.DeserializeObject<MonHocDTO>(json);
+
+                    return MonHoc;
+                }
+            }
+            return null;
+        }
 
 
         public static HttpStatusCode PostMonHoc(MonHocDTO monHoc)
@@ -56,7 +73,10 @@ namespace QLDiemSV_Winform.ApiController
             using (var httpClient = new HttpClient())
             {
                 string jsonMonHoc = JsonConvert.SerializeObject(monHoc);
-                HttpResponseMessage response = httpClient.PostAsync($"{Api_MonHoc_Url}", new StringContent(jsonMonHoc, System.Text.Encoding.UTF8, "application/json")).Result;
+                HttpResponseMessage response = httpClient.PostAsync(
+                    $"{Api_MonHoc_Url}",
+                    new StringContent(jsonMonHoc, System.Text.Encoding.UTF8, "application/json"))
+                    .Result;
                 return response.StatusCode;
             }
         }
@@ -66,26 +86,11 @@ namespace QLDiemSV_Winform.ApiController
             using (var httpClient = new HttpClient())
             {
                 string jsonMonHoc = JsonConvert.SerializeObject(monHoc);
-                HttpResponseMessage response = httpClient.PutAsync($"{Api_MonHoc_Url}/{monHoc.MaMh}", new StringContent(jsonMonHoc, System.Text.Encoding.UTF8, "application/json")).Result;
+                HttpResponseMessage response = httpClient.PutAsync(
+                    $"{Api_MonHoc_Url}/{monHoc.MaMh}",
+                    new StringContent(jsonMonHoc, System.Text.Encoding.UTF8, "application/json"))
+                    .Result;
                 return response.StatusCode;
-            }
-        }
-
-        public static EnumCode.ApiDeleteResult DeleteMonHoc(int maMonHoc)
-        {
-            try
-            {
-                using (var httpClient = new HttpClient())
-                {
-                    HttpResponseMessage httpResponse = httpClient.DeleteAsync($"{Api_MonHoc_Url}/{maMonHoc}").Result;
-                    return httpResponse.IsSuccessStatusCode || httpResponse.StatusCode == HttpStatusCode.NoContent ? EnumCode.ApiDeleteResult.Success : EnumCode.ApiDeleteResult.Failure;
-                }
-            }
-            catch (Exception ex)
-            {
-                // Handle exceptions or log errors as needed
-                Console.WriteLine($"Error deleting teacher: {ex.Message}");
-                return EnumCode.ApiDeleteResult.Failure;
             }
         }
     }

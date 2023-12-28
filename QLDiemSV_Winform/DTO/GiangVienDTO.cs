@@ -8,17 +8,6 @@ namespace QLDiemSV_Winform.DTO
 {
     internal class GiangVienDTO
     {
-        private int maGv;
-        private string ho;
-        private String ten;
-        private String diaChi;
-        private String sdt;
-        private int maKhoa;
-        private int maQuyen;
-
-        [JsonIgnore]
-        private string chucVu;
-
         public GiangVienDTO()
         {
         }
@@ -38,21 +27,28 @@ namespace QLDiemSV_Winform.DTO
         {
             if (TeacherDecentralization.GetQuyenGiangVien(this.MaQuyen) == EnumCode.Decentralization.NhanVien)
             {
-                this.chucVu = "Nhân viên";
-            }
-            else
+                this.ChucVu = "Nhân viên";
+            } else
             {
-                this.chucVu = "Giảng viên";
+                this.ChucVu = "Giảng viên";
             }
         }
 
-        public int MaGv { get => maGv; set => maGv = value; }
-        public string Ho { get => ho; set => ho = value; }
-        public string Ten { get => ten; set => ten = value; }
-        public string DiaChi { get => diaChi; set => diaChi = value; }
-        public string Sdt { get => sdt; set => sdt = value; }
-        public int MaKhoa { get => maKhoa; set => maKhoa = value; }
-        public int MaQuyen { get => maQuyen; set => maQuyen = value; }
-        public string ChucVu { get => chucVu; set => chucVu = value; }
+        public int MaGv { get; set; }
+
+        public string Ho { get; set; }
+
+        public string Ten { get; set; }
+
+        public string DiaChi { get; set; }
+
+        public string Sdt { get; set; }
+
+        public int MaKhoa { get; set; }
+
+        public int MaQuyen { get; set; }
+
+        [JsonIgnore]
+        public string ChucVu { get; set; }
     }
 }

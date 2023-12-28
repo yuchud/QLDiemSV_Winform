@@ -1,23 +1,20 @@
-﻿using Newtonsoft.Json.Linq;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
+using QLDiemSV_Winform.DTO;
+using QLDiemSV_Winform.Validation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
-using System.Runtime.Remoting.Messaging;
-using QLDiemSV_Winform.Validation;
-using QLDiemSV_Winform.DTO;
 
 namespace QLDiemSV_Winform.Secure
 {
     internal class TeacherDecentralization
     {
         private static readonly string Api_Quyen = Program.ApiBaseUrl + "/Quyen";
-        private static Dictionary<int, EnumCode.Decentralization> pairQuyen = pairQuyen_GetFromApi();
 
-        TeacherDecentralization() {}
+        TeacherDecentralization()
+        {
+        }
 
         private static Dictionary<int, EnumCode.Decentralization> pairQuyen_GetFromApi()
         {
@@ -28,30 +25,24 @@ namespace QLDiemSV_Winform.Secure
                 {
                     string json = httpResponse.Content.ReadAsStringAsync().Result;
                     List<QuyenDTO> listQuyen = JsonConvert.DeserializeObject<List<QuyenDTO>>(json);
-                    Dictionary<int, EnumCode.Decentralization> keyValuePairs = new Dictionary<int, EnumCode.Decentralization>();
+                    Dictionary<int, EnumCode.Decentralization> keyValuePairs = new Dictionary<int, EnumCode.Decentralization>(
+                        );
                     foreach (QuyenDTO quyen in listQuyen)
                     {
                         int key = quyen.MaQuyen;
                         string value = quyen.TenQuyen;
-                        if(value == "GiangVien")
+                        if (value == "GiangVien")
                         {
                             keyValuePairs.Add(key, EnumCode.Decentralization.GiangVien);
-                        }
-                        else
+                        } else
                         {
                             keyValuePairs.Add(key, EnumCode.Decentralization.NhanVien);
                         }
-                        
                     }
                     return keyValuePairs;
                 }
             }
             return null;
-        }
-
-        public static EnumCode.Decentralization GetQuyenGiangVien(int maQuyen)
-        {
-            return pairQuyen[maQuyen];
         }
 
         public static int GetMaQuyenGiangVien(EnumCode.Decentralization tenQuyen)
@@ -65,5 +56,9 @@ namespace QLDiemSV_Winform.Secure
             }
             return 0;
         }
+
+        public static EnumCode.Decentralization GetQuyenGiangVien(int maQuyen) => pairQuyen[maQuyen];
+
+        private static Dictionary<int, EnumCode.Decentralization> pairQuyen = pairQuyen_GetFromApi();
     }
 }

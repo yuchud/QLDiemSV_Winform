@@ -132,6 +132,12 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Secure\SecureStorage.cs" />
+    <Compile Include="Form\FormQuanLy\Form_Nhap_DiemSinhVien.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\FormQuanLy\Form_Nhap_DiemSinhVien.Designer.cs">
+      <DependentUpon>Form_Nhap_DiemSinhVien.cs</DependentUpon>
+    </Compile>
     <Compile Include="SubForm\SubForm_Lay_LopTinChi.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -152,12 +158,6 @@
     </Compile>
     <Compile Include="Support\SubjectPairGenerator.cs" />
     <Compile Include="Secure\TeacherDecentralization.cs" />
-    <Compile Include="SubForm\SubForm_Lay_GiangVien.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="SubForm\SubForm_Lay_GiangVien.Designer.cs">
-      <DependentUpon>SubForm_Lay_GiangVien.cs</DependentUpon>
-    </Compile>
     <Compile Include="SubForm\SubForm_Lay_LopSinhVien.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -209,8 +209,8 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="SubForm\SubForm_Lay_GiangVien.resx">
-      <DependentUpon>SubForm_Lay_GiangVien.cs</DependentUpon>
+    <EmbeddedResource Include="Form\FormQuanLy\Form_Nhap_DiemSinhVien.resx">
+      <DependentUpon>Form_Nhap_DiemSinhVien.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SubForm\SubForm_Lay_LopSinhVien.resx">
       <DependentUpon>SubForm_Lay_LopSinhVien.cs</DependentUpon>

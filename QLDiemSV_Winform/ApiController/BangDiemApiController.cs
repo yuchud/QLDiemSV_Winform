@@ -4,18 +4,59 @@ using QLDiemSV_Winform.Validation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
+using System.Net.Http;
 
 namespace QLDiemSV_Winform.ApiController
 {
     internal class BangDiemApiController
     {
-
         private static readonly string Api_BangDiem_Url = Program.ApiBaseUrl + "/BangDiem";
-        public BangDiemApiController() { }
+
+        public BangDiemApiController()
+        {
+        }
+
+        public static EnumCode.ApiDeleteResult DeleteBangDiem(int maBangDiem)
+        {
+            try
+            {
+                using (var httpClient = new HttpClient())
+                {
+                    HttpResponseMessage httpResponse = httpClient.DeleteAsync($"{Api_BangDiem_Url}/{maBangDiem}").Result;
+                    return httpResponse.IsSuccessStatusCode || httpResponse.StatusCode == HttpStatusCode.NoContent
+                        ? EnumCode.ApiDeleteResult.Success
+                        : EnumCode.ApiDeleteResult.Failure;
+                }
+            } catch (Exception ex)
+            {
+                // Handle exceptions or log errors as needed
+                Console.WriteLine($"Error deleting teacher: {ex.Message}");
+                return EnumCode.ApiDeleteResult.Failure;
+            }
+        }
+
+
+        public static EnumCode.ApiDeleteResult DeleteBangDiem(int maLopTC, int maSv)
+        {
+            try
+            {
+                using (var httpClient = new HttpClient())
+                {
+                    HttpResponseMessage httpResponse = httpClient.DeleteAsync(
+                        $"{Api_BangDiem_Url}/maloptc={maLopTC}&masv={maSv}")
+                        .Result;
+                    return httpResponse.IsSuccessStatusCode || httpResponse.StatusCode == HttpStatusCode.NoContent
+                        ? EnumCode.ApiDeleteResult.Success
+                        : EnumCode.ApiDeleteResult.Failure;
+                }
+            } catch (Exception ex)
+            {
+                // Handle exceptions or log errors as needed
+                Console.WriteLine($"Error deleting teacher: {ex.Message}");
+                return EnumCode.ApiDeleteResult.Failure;
+            }
+        }
 
         public static BangDiemDTO GetBangDiem(int maBangDiem)
         {
@@ -54,7 +95,8 @@ namespace QLDiemSV_Winform.ApiController
         {
             using (var httpClient = new HttpClient())
             {
-                HttpResponseMessage httpResponse = httpClient.GetAsync($"{Api_BangDiem_Url}/maSinhVien={maSinhVien}").Result;
+                HttpResponseMessage httpResponse = httpClient.GetAsync($"{Api_BangDiem_Url}/maSinhVien={maSinhVien}")
+                    .Result;
                 if (httpResponse.IsSuccessStatusCode)
                 {
                     string json = httpResponse.Content.ReadAsStringAsync().Result;
@@ -70,7 +112,10 @@ namespace QLDiemSV_Winform.ApiController
             using (var httpClient = new HttpClient())
             {
                 string jsonBangDiem = JsonConvert.SerializeObject(bangDiem);
-                HttpResponseMessage response = httpClient.PostAsync($"{Api_BangDiem_Url}", new StringContent(jsonBangDiem, System.Text.Encoding.UTF8, "application/json")).Result;
+                HttpResponseMessage response = httpClient.PostAsync(
+                    $"{Api_BangDiem_Url}",
+                    new StringContent(jsonBangDiem, System.Text.Encoding.UTF8, "application/json"))
+                    .Result;
                 return response.StatusCode;
             }
         }
@@ -80,45 +125,11 @@ namespace QLDiemSV_Winform.ApiController
             using (var httpClient = new HttpClient())
             {
                 string jsonBangDiem = JsonConvert.SerializeObject(bangDiem);
-                HttpResponseMessage response = httpClient.PutAsync($"{Api_BangDiem_Url}/{bangDiem.MaBangDiem}", new StringContent(jsonBangDiem, System.Text.Encoding.UTF8, "application/json")).Result;
+                HttpResponseMessage response = httpClient.PutAsync(
+                    $"{Api_BangDiem_Url}/{bangDiem.MaBangDiem}",
+                    new StringContent(jsonBangDiem, System.Text.Encoding.UTF8, "application/json"))
+                    .Result;
                 return response.StatusCode;
-            }
-        }
-
-        public static EnumCode.ApiDeleteResult DeleteBangDiem(int maBangDiem)
-        {
-            try
-            {
-                using (var httpClient = new HttpClient())
-                {
-                    HttpResponseMessage httpResponse = httpClient.DeleteAsync($"{Api_BangDiem_Url}/{maBangDiem}").Result;
-                    return httpResponse.IsSuccessStatusCode || httpResponse.StatusCode == HttpStatusCode.NoContent ? EnumCode.ApiDeleteResult.Success : EnumCode.ApiDeleteResult.Failure;
-                }
-            }
-            catch (Exception ex)
-            {
-                // Handle exceptions or log errors as needed
-                Console.WriteLine($"Error deleting teacher: {ex.Message}");
-                return EnumCode.ApiDeleteResult.Failure;
-            }
-        }
-
-
-        public static EnumCode.ApiDeleteResult DeleteBangDiem(int maLopTC, int maSv)
-        {
-            try
-            {
-                using (var httpClient = new HttpClient())
-                {
-                    HttpResponseMessage httpResponse = httpClient.DeleteAsync($"{Api_BangDiem_Url}/maloptc={maLopTC}&masv={maSv}").Result;
-                    return httpResponse.IsSuccessStatusCode || httpResponse.StatusCode == HttpStatusCode.NoContent ? EnumCode.ApiDeleteResult.Success : EnumCode.ApiDeleteResult.Failure;
-                }
-            }
-            catch (Exception ex)
-            {
-                // Handle exceptions or log errors as needed
-                Console.WriteLine($"Error deleting teacher: {ex.Message}");
-                return EnumCode.ApiDeleteResult.Failure;
             }
         }
     }
