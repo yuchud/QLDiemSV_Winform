@@ -15,8 +15,8 @@ namespace QLDiemSV_Winform.DTO
             this.MatKhau = matKhau;
         }
 
-        public string MatKhau { get; set; }
-
         public int UserId { get; set; }
+
+        public string MatKhau { get; set; }
     }
 }

@@ -62,7 +62,6 @@ D:\Workspace\CSharp\Microservices\Winform_DoAn\QLDiemSV_Winform\bin\Debug\DevExp
 D:\Workspace\CSharp\Microservices\Winform_DoAn\QLDiemSV_Winform\bin\Debug\DevExpress.Pdf.v23.1.Drawing.xml
 D:\Workspace\CSharp\Microservices\Winform_DoAn\QLDiemSV_Winform\bin\Debug\DevExpress.Sparkline.v23.1.Core.xml
 D:\Workspace\CSharp\Microservices\Winform_DoAn\QLDiemSV_Winform\obj\Debug\QLDiemSV_Winform.csproj.AssemblyReference.cache
-D:\Workspace\CSharp\Microservices\Winform_DoAn\QLDiemSV_Winform\obj\Debug\QLDiemSV_Winform.FormDangNhap.resources
 D:\Workspace\CSharp\Microservices\Winform_DoAn\QLDiemSV_Winform\obj\Debug\QLDiemSV_Winform.FormChinh.resources
 D:\Workspace\CSharp\Microservices\Winform_DoAn\QLDiemSV_Winform\obj\Debug\QLDiemSV_Winform.Form.Form_QL_GiangVien.resources
 D:\Workspace\CSharp\Microservices\Winform_DoAn\QLDiemSV_Winform\obj\Debug\QLDiemSV_Winform.Properties.Resources.resources
@@ -75,7 +74,6 @@ D:\Workspace\CSharp\Microservices\Winform_DoAn\QLDiemSV_Winform\obj\Debug\QLDiem
 D:\Workspace\CSharp\Microservices\Winform_DoAn\QLDiemSV_Winform\obj\Debug\QLDiemSV_Winform.Form.Form_QL_LopSinhVien.resources
 D:\Workspace\CSharp\Microservices\Winform_DoAn\QLDiemSV_Winform\obj\Debug\QLDiemSV_Winform.Form.Form_QL_MonHoc.resources
 D:\Workspace\CSharp\Microservices\Winform_DoAn\QLDiemSV_Winform\obj\Debug\QLDiemSV_Winform.Form.Form_QL_SinhVien.resources
-D:\Workspace\CSharp\Microservices\Winform_DoAn\QLDiemSV_Winform\obj\Debug\QLDiemSV_Winform.SubForm.SubForm_Lay_GiangVien.resources
 D:\Workspace\CSharp\Microservices\Winform_DoAn\QLDiemSV_Winform\obj\Debug\QLDiemSV_Winform.SubForm.SubForm_Lay_LopSinhVien.resources
 D:\Workspace\CSharp\Microservices\Winform_DoAn\QLDiemSV_Winform\obj\Debug\QLDiemSV_Winform.Form.Form_Tao_LopTinChi.resources
 D:\Workspace\CSharp\Microservices\Winform_DoAn\QLDiemSV_Winform\obj\Debug\QLDiemSV_Winform.SubForm.SubForm_Lay_MonHoc.resources
@@ -84,3 +82,6 @@ D:\Workspace\CSharp\Microservices\Winform_DoAn\QLDiemSV_Winform\obj\Debug\QLDiem
 D:\Workspace\CSharp\Microservices\Winform_DoAn\QLDiemSV_Winform\obj\Debug\QLDiemSV_Winform.SubForm.SubForm_Lay_SinhVien.resources
 D:\Workspace\CSharp\Microservices\Winform_DoAn\QLDiemSV_Winform\obj\Debug\QLDiemSV_Winform.Form.FormQuanLy.Form_Doi_MatKhau.resources
 D:\Workspace\CSharp\Microservices\Winform_DoAn\QLDiemSV_Winform\obj\Debug\QLDiemSV_Winform.SubForm.Form_Nhap_DiemSinhVien.resources
+D:\Workspace\CSharp\Microservices\Winform_DoAn\QLDiemSV_Winform\obj\Debug\QLDiemSV_Winform.Form.FormQuanLy.Form_QL_Khoa.resources
+D:\Workspace\CSharp\Microservices\Winform_DoAn\QLDiemSV_Winform\obj\Debug\QLDiemSV_Winform.Form_DangNhap.resources
+D:\Workspace\CSharp\Microservices\Winform_DoAn\QLDiemSV_Winform\obj\Debug\QLDiemSV_Winform.Form.Form_KhoiPhuc_MatKhau.resources

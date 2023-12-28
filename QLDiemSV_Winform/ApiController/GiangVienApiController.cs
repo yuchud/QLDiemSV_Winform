@@ -33,7 +33,7 @@ namespace QLDiemSV_Winform.Controller
             } catch (Exception ex)
             {
                 // Handle exceptions or log errors as needed
-                Console.WriteLine($"Error deleting teacher: {ex.Message}");
+                Console.WriteLine($"Error deleting GiangVien: {ex.Message}");
                 return EnumCode.ApiDeleteResult.Failure;
             }
         }

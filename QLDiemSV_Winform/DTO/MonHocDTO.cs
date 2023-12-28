@@ -27,18 +27,18 @@ namespace QLDiemSV_Winform.DTO
 
         public int MaMh { get; set; }
 
-        public int SoTc { get; set; }
-
         public string TenMh { get; set; }
+        public int TschuyenCan { get; set; }
+
 
         public int TsbaiTap { get; set; }
 
-        public int TschuyenCan { get; set; }
 
         public int TskiemTra { get; set; }
 
+        public int TsthucHanh { get; set; }
         public int Tsthi { get; set; }
 
-        public int TsthucHanh { get; set; }
+        public int SoTc { get; set; }
     }
 }

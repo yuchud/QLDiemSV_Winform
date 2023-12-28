@@ -19,16 +19,16 @@ namespace QLDiemSV_Winform.DTO
             this.MaLopSv = maLopSv;
         }
 
-        public string DiaChi { get; set; }
+        public int MaSv { get; set; }
 
         public string Ho { get; set; }
 
-        public int MaLopSv { get; set; }
+        public string Ten { get; set; }
 
-        public int MaSv { get; set; }
+        public string DiaChi { get; set; }
 
         public string Sdt { get; set; }
 
-        public string Ten { get; set; }
+        public int MaLopSv { get; set; }
     }
 }

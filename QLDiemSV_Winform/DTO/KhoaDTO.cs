@@ -9,9 +9,9 @@ namespace QLDiemSV_Winform.DTO
         {
         }
 
-        public KhoaDTO(string maKhoa, string tenKhoa)
+        public KhoaDTO(int maKhoa, string tenKhoa)
         {
-            this.MaKhoa = Convert.ToInt32(maKhoa);
+            this.MaKhoa = maKhoa;
             this.TenKhoa = tenKhoa;
         }
 

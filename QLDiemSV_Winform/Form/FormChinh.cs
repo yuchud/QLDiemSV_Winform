@@ -20,7 +20,7 @@ namespace QLDiemSV_Winform
         }
 
         private void btn_DangNhap_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e) => TabManager.OpenForm(
-            new FormDangNhap(),
+            new Form_DangNhap(),
             ConstantValues.TenFormDangNhap);
 
         private void btn_DangXuat_ItemClick(object sender, ItemClickEventArgs e)
@@ -30,9 +30,13 @@ namespace QLDiemSV_Winform
             ShowMenu();
         }
 
-        private void btn_DoiMatKhau_ItemClick(object sender, ItemClickEventArgs e) => TabManager.OpenForm(
-            new Form_Doi_MatKhau(),
-            ConstantValues.TenFormDoiMatKhau);
+        private void btn_DoiMatKhau_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            if(SecureStorage.GetQuyen() == EnumCode.Decentralization.None)
+                TabManager.OpenForm(new Form_KhoiPhuc_MatKhau(), ConstantValues.TenFormKhoiPhucMatKhau);
+            else
+                TabManager.OpenForm(new Form_Doi_MatKhau(), ConstantValues.TenFormDoiMatKhau);
+        }
 
         private void btn_NhapDiem_ItemClick(object sender, ItemClickEventArgs e) => TabManager.OpenForm(
             new Form_Nhap_DiemSinhVien(),
@@ -66,14 +70,16 @@ namespace QLDiemSV_Winform
         private void loadDefaultForm()
         {
             btn_DangNhap.Visibility = BarItemVisibility.Always;
-            btn_DangXuat.Visibility = btn_DoiMatKhau.Visibility = BarItemVisibility.Never;
+            btn_DangXuat.Visibility = BarItemVisibility.Never;
+            btn_DoiMatKhau.Caption = "Khôi phục mật khẩu";
             rbgp_NhanSu.Visible = rbpg_MonHoc.Visible = rbpg_Lop.Visible = rbpg_Diem.Visible = false;
         }
 
         private void loadGiangVienForm()
         {
             btn_DangNhap.Visibility = BarItemVisibility.Never;
-            btn_DangXuat.Visibility = btn_DoiMatKhau.Visibility = BarItemVisibility.Always;
+            btn_DangXuat.Visibility = BarItemVisibility.Always;
+            btn_DoiMatKhau.Caption = "Đổi mật khẩu";
             rbpg_Diem.Visible = true;
         }
 
@@ -90,12 +96,15 @@ namespace QLDiemSV_Winform
         {
             var (tenDangNhap, MatKhau, Quyen) = SecureStorage.GetCredentials();
             tssl_Ma.Text = (tenDangNhap != null) ? tenDangNhap : string.Empty;
-            if (Quyen == EnumCode.Decentralization.NhanVien)
+            if(Quyen == EnumCode.Decentralization.NhanVien)
                 loadQuanLyForm();
-            else if (Quyen == EnumCode.Decentralization.GiangVien)
+            else if(Quyen == EnumCode.Decentralization.GiangVien)
                 loadGiangVienForm();
             else
                 loadDefaultForm();
         }
+
+        private void btn_QL_Khoa_ItemClick(object sender, ItemClickEventArgs e)
+        { TabManager.OpenForm(new Form_QL_Khoa(), ConstantValues.TenFormQuanLyKhoa); }
     }
 }

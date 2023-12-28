@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using QLDiemSV_Winform.DTO;
 using QLDiemSV_Winform.Secure;
+using QLDiemSV_Winform.Support;
 using QLDiemSV_Winform.Validation;
 using System;
 using System.Linq;
@@ -9,11 +10,11 @@ using System.Windows.Forms;
 
 namespace QLDiemSV_Winform
 {
-    public partial class FormDangNhap : DevExpress.XtraEditors.XtraForm
+    public partial class Form_DangNhap : DevExpress.XtraEditors.XtraForm
     {
         private readonly string Api_DangNhap_Url = Program.ApiBaseUrl + "/Login";
 
-        public FormDangNhap() { InitializeComponent(); }
+        public Form_DangNhap() { InitializeComponent(); }
 
         private void btn_DangNhap_Click(object sender, EventArgs e)
         {
@@ -39,7 +40,7 @@ namespace QLDiemSV_Winform
                 if (isLoginSucessful)
                 {
                     SecureStorage.SaveCredentials(tenDangNhap, matKhau);
-                    CloseForm();
+                    TabManager.CloseAllForm();
                     Program.formChinh.ShowMenu();
                 } else
                 {

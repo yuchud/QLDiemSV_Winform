@@ -1,6 +1,6 @@
 ﻿namespace QLDiemSV_Winform
 {
-    partial class FormDangNhap
+    partial class Form_DangNhap
     {
         /// <summary>
         /// Required designer variable.

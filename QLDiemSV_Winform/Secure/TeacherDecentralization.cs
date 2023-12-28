@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using QLDiemSV_Winform.ApiController;
 using QLDiemSV_Winform.DTO;
 using QLDiemSV_Winform.Validation;
 using System;
@@ -18,31 +19,31 @@ namespace QLDiemSV_Winform.Secure
 
         private static Dictionary<int, EnumCode.Decentralization> pairQuyen_GetFromApi()
         {
-            using (var httpClient = new HttpClient())
+            try
             {
-                HttpResponseMessage httpResponse = httpClient.GetAsync($"{Api_Quyen}").Result;
-                if (httpResponse.IsSuccessStatusCode)
-                {
-                    string json = httpResponse.Content.ReadAsStringAsync().Result;
-                    List<QuyenDTO> listQuyen = JsonConvert.DeserializeObject<List<QuyenDTO>>(json);
-                    Dictionary<int, EnumCode.Decentralization> keyValuePairs = new Dictionary<int, EnumCode.Decentralization>(
+                List<QuyenDTO> listQuyen = QuyenApiController.GetListQuyen();
+                Dictionary<int, EnumCode.Decentralization> keyValuePairs = new Dictionary<int, EnumCode.Decentralization>(
                         );
-                    foreach (QuyenDTO quyen in listQuyen)
+                foreach (QuyenDTO quyen in listQuyen)
+                {
+                    int key = quyen.MaQuyen;
+                    string value = quyen.TenQuyen;
+                    if (value == "GiangVien")
                     {
-                        int key = quyen.MaQuyen;
-                        string value = quyen.TenQuyen;
-                        if (value == "GiangVien")
-                        {
-                            keyValuePairs.Add(key, EnumCode.Decentralization.GiangVien);
-                        } else
-                        {
-                            keyValuePairs.Add(key, EnumCode.Decentralization.NhanVien);
-                        }
+                        keyValuePairs.Add(key, EnumCode.Decentralization.GiangVien);
                     }
-                    return keyValuePairs;
+                    else
+                    {
+                        keyValuePairs.Add(key, EnumCode.Decentralization.NhanVien);
+                    }
                 }
+                return keyValuePairs;
             }
-            return null;
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return null;
+            }
         }
 
         public static int GetMaQuyenGiangVien(EnumCode.Decentralization tenQuyen)

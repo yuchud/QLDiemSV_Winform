@@ -73,6 +73,9 @@ namespace QLDiemSV_Winform.Secure
             }
         }
 
-        public static EnumCode.Decentralization Quyen { get => quyen; }
+        public static EnumCode.Decentralization GetQuyen()
+        {
+            return quyen;
+        }
     }
 }

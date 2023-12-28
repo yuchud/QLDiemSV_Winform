@@ -15,14 +15,14 @@ namespace QLDiemSV_Winform.Validation
 
         public static string NotNullStandardizeNumber(string input)
         {
-            if (string.IsNullOrEmpty(input))
+            if(string.IsNullOrEmpty(input))
                 return "0";
             return Convert.ToInt32(input).ToString();
         }
 
         public static string StandardizeText(string input)
         {
-            if (string.IsNullOrEmpty(input))
+            if(string.IsNullOrEmpty(input))
                 return string.Empty;
             input = input.ToLower();
             input = input.Trim();

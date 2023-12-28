@@ -42,6 +42,7 @@
             this.btn_DangXuat = new DevExpress.XtraBars.BarButtonItem();
             this.btn_DoiMatKhau = new DevExpress.XtraBars.BarButtonItem();
             this.btn_NhapDiem = new DevExpress.XtraBars.BarButtonItem();
+            this.btn_QL_Khoa = new DevExpress.XtraBars.BarButtonItem();
             this.rbg_HeThong = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.tbgp_TaiKhoan = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.rbpg_MonHoc = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
@@ -74,9 +75,10 @@
             this.btn_DangNhap,
             this.btn_DangXuat,
             this.btn_DoiMatKhau,
-            this.btn_NhapDiem});
+            this.btn_NhapDiem,
+            this.btn_QL_Khoa});
             this.ribbon.Location = new System.Drawing.Point(0, 0);
-            this.ribbon.MaxItemId = 21;
+            this.ribbon.MaxItemId = 23;
             this.ribbon.Name = "ribbon";
             this.ribbon.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.rbg_HeThong});
@@ -195,6 +197,16 @@
             this.btn_NhapDiem.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.SmallWithText;
             this.btn_NhapDiem.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btn_NhapDiem_ItemClick);
             // 
+            // btn_QL_Khoa
+            // 
+            this.btn_QL_Khoa.Caption = "Quản lý khoa";
+            this.btn_QL_Khoa.Id = 21;
+            this.btn_QL_Khoa.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btn_QL_Khoa.ImageOptions.Image")));
+            this.btn_QL_Khoa.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("btn_QL_Khoa.ImageOptions.LargeImage")));
+            this.btn_QL_Khoa.Name = "btn_QL_Khoa";
+            this.btn_QL_Khoa.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.SmallWithText;
+            this.btn_QL_Khoa.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btn_QL_Khoa_ItemClick);
+            // 
             // rbg_HeThong
             // 
             this.rbg_HeThong.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
@@ -216,6 +228,7 @@
             // 
             // rbpg_MonHoc
             // 
+            this.rbpg_MonHoc.ItemLinks.Add(this.btn_QL_Khoa);
             this.rbpg_MonHoc.ItemLinks.Add(this.btn_QL_MonHoc);
             this.rbpg_MonHoc.Name = "rbpg_MonHoc";
             this.rbpg_MonHoc.Text = "Môn Học";
@@ -324,7 +337,6 @@
         private DevExpress.XtraBars.BarButtonItem btn_DangNhap100;
         private System.Windows.Forms.TabControl tabControl1;
         private DevExpress.XtraBars.BarButtonItem btn_XepLop;
-        private DevExpress.XtraBars.Ribbon.RibbonPageGroup rbgp_Lop;
         private DevExpress.XtraBars.BarButtonItem btn_QL_TaoLopTinChi;
         private DevExpress.XtraBars.BarButtonItem btn_DangXuat100;
         private System.Windows.Forms.StatusStrip statusStrip1;
@@ -339,5 +351,6 @@
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup rbpg_Lop;
         private DevExpress.XtraBars.BarButtonItem btn_NhapDiem;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup rbpg_Diem;
+        private DevExpress.XtraBars.BarButtonItem btn_QL_Khoa;
     }
 }

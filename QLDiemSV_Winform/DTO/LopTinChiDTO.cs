@@ -22,13 +22,14 @@ namespace QLDiemSV_Winform.DTO
 
         public void Generate_TenMonHoc() { TenMh = SubjectPairGenerator.GetTenMonHoc(MaMh); }
 
-        public int Ky { get; set; }
-
         public int MaLopTc { get; set; }
 
         public int MaMh { get; set; }
 
         public int Nam { get; set; }
+
+        public int Ky { get; set; }
+
 
 [JsonIgnore]
         public string TenMh { get; set; }
