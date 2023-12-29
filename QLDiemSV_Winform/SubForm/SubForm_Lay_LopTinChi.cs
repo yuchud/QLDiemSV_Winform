@@ -87,7 +87,7 @@ namespace QLDiemSV_Winform.SubForm
         private void dgv_LopTinChi_LoadData()
         {
             int nam = Convert.ToInt32(cmb_Nam.SelectedItem);
-            lopTinChiList = LopTinChiApiController.GetListLopTinChiByNamHoc(nam);
+            lopTinChiList = LopTinChiController.GetListLopTinChiByNamHoc(nam);
             foreach (LopTinChiDTO lopTinChi in lopTinChiList)
                 lopTinChi.Generate_TenMonHoc();
 

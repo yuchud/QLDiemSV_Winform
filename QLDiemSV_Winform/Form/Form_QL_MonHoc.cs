@@ -12,6 +12,9 @@ namespace QLDiemSV_Winform.Form
 {
     public partial class Form_QL_MonHoc : DevExpress.XtraEditors.XtraForm
     {
+        private static readonly string Action = ConstantValues.ActionManage;
+        private static readonly string Target = ConstantValues.TargetSubject;
+        public static readonly string FormName = Action + (Action.Length > 0 && Target.Length > 0 ? " " : "") + Target;
         public Form_QL_MonHoc()
         {
             InitializeComponent();
@@ -28,7 +31,7 @@ namespace QLDiemSV_Winform.Form
         {
             inputField_Open();
             int maMonHoc = Convert.ToInt32(txt_Ma.Text);
-            if (LopTinChiApiController.GetListLopTinChiByMaMonHoc(maMonHoc).Count > 0)
+            if (LopTinChiController.GetListLopTinChiByMaMonHoc(maMonHoc).Count > 0)
                 txt_CC.ReadOnly = txt_BT.ReadOnly =
                     txt_KT.ReadOnly =
                     txt_TH.ReadOnly =
@@ -47,62 +50,38 @@ namespace QLDiemSV_Winform.Form
 
         private void btn_XacNhan_Click(object sender, EventArgs e)
         {
-            lbl_error_XacNhan.Visible = false;
-            if (Convert.ToInt32(lbl_TongTrongSo.Text) != 100)
-            {
-                lbl_error_XacNhan.Text = "Tổng trọng số phải bằng 100";
-                lbl_error_XacNhan.Visible = true;
-                return;
-            }
-            bool isNoneEmptyField = inputField_CheckNoneEmpty();
-            bool isAdd = txt_Ma.Text == "0";
-            string action = (isAdd) ? "thêm" : "chỉnh sửa";
-            if (isNoneEmptyField)
-            {
-                DialogResult dialogResult = MessageBox.Show(
-                    $"Bạn có chắc chắn {action} môn học này?",
-                    "Xác nhận",
-                    MessageBoxButtons.YesNo,
-                    MessageBoxIcon.Question);
-                if (dialogResult == DialogResult.No)
-                    return;
-                HttpStatusCode httpStatusCode;
-                if (isAdd)
-                    httpStatusCode = MonHocApiController.PostMonHoc(dataMonHoc_Create(0));
-                else
-                    httpStatusCode = MonHocApiController.PutMonHoc(dataMonHoc_Create(Convert.ToInt32(txt_Ma.Text)));
+            if (inputField_CheckNoneEmpty() == false) return;
+            bool isAdding = txt_Ma.Text == "0";
+            string editAction = (isAdding) ? ConstantValues.ActionCreate : ConstantValues.ActionUpdate;
 
-                if (StatusCodeChecker.GetResponseClass(httpStatusCode) ==
-                    EnumCode.HTTPResponseStatusClass.SuccessfulResponses)
-                {
-                    MessageBox.Show(
-                        $"Đã {action} môn học thành công!",
-                        "Success",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Information);
-                    if (isAdd)
-                        form_LoadInitial();
-                    else
-                    {
-                        int currentSelectedRow = dgv_MonHoc.SelectedRows[0].Index;
-                        dgv_MonHoc_FillData();
-                        dgv_MonHoc.Rows[currentSelectedRow].Selected = true;
-                    }
-                    SubjectPairGenerator.Reload();
-                }
+            if (MessageBoxManager.OpenMessageBox(editAction, Target) == false)
+                return;
+
+            HttpStatusCode httpStatusCode;
+            if (isAdding)
+                httpStatusCode = MonHocController.PostMonHoc(dataMonHoc_Create(0));
+            else
+                httpStatusCode = MonHocController.PutMonHoc(
+                    dataMonHoc_Create(Convert.ToInt32(txt_Ma.Text)));
+
+            bool isSuccessful = MessageBoxManager.ShowResult(httpStatusCode, editAction, Target);
+            if (isSuccessful)
+            {
+                if (isAdding)
+                    form_LoadInitial();
                 else
-                    MessageBox.Show(
-                        $"{action} thất bại. Status code: {httpStatusCode}",
-                        "Error",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Error);
-                inputField_Close();
+                {
+                    int currentSelectedRow = dgv_MonHoc.SelectedRows[0].Index;
+                    dgv_MonHoc_FillData();
+                    dgv_MonHoc.Rows[currentSelectedRow].Selected = true;
+                }
             }
+            inputField_Close();
         }
 
         private (bool canDelete, string error) btn_Xoa_CheckBeforeDelete(int maMonHoc)
         {
-            if (LopTinChiApiController.GetListLopTinChiByMaMonHoc(maMonHoc).Count > 0)
+            if (LopTinChiController.GetListLopTinChiByMaMonHoc(maMonHoc).Count > 0)
                 return (false, "Môn học đã được đăng ký lớp tín chỉ, không thể xóa");
             return (true, string.Empty);
         }
@@ -119,23 +98,9 @@ namespace QLDiemSV_Winform.Form
                 return;
             }
 
-            DialogResult dialogResult = MessageBox.Show(
-                "Bạn có chắc chắn xóa môn học này?",
-                "Xác nhận",
-                MessageBoxButtons.YesNo,
-                MessageBoxIcon.Question);
-            if (dialogResult == DialogResult.No)
-                return;
-            bool isDeletionSuccessful = MonHocApiController.DeleteMonHoc(maMonHoc) == EnumCode.ApiDeleteResult.Success;
+            if (MessageBoxManager.OpenMessageBox(ConstantValues.ActionDelete, Target) == false) return;
 
-            if (isDeletionSuccessful)
-            {
-                MessageBox.Show("Xóa môn học thành công!");
-                form_LoadInitial();
-                // Perform additional actions after a successful deletion if needed
-            }
-            else
-                MessageBox.Show("Xóa môn học thất bại.");
+            if (MessageBoxManager.ShowResult(MonHocController.DeleteMonHoc(maMonHoc), ConstantValues.ActionDelete, Target)) form_LoadInitial();
         }
 
 
@@ -163,7 +128,7 @@ namespace QLDiemSV_Winform.Form
 
         private void dgv_MonHoc_FillData()
         {
-            dgv_MonHoc.DataSource = MonHocApiController.GetListMonHoc();
+            dgv_MonHoc.DataSource = MonHocController.GetListMonHoc();
             DataGridViewManager.HideColumn(dgv_MonHoc, "maKhoa");
             lbl_SoLuong.Text = dgv_MonHoc.RowCount.ToString();
             dgv_MonHoc.ClearSelection();
@@ -222,7 +187,7 @@ namespace QLDiemSV_Winform.Form
                 inputField_ClearAllData();
                 return;
             }
-            MonHocDTO monHoc = MonHocApiController.GetMonHoc(maMonHoc);
+            MonHocDTO monHoc = MonHocController.GetMonHoc(maMonHoc);
             txt_Ma.Enabled = true;
             txt_Ma.Text = monHoc.MaMh.ToString();
             txt_Ma.Enabled = false;
@@ -274,7 +239,7 @@ namespace QLDiemSV_Winform.Form
             txt_Ma.Enabled = false;
         }
 
-        private void txt_BT_KeyPress(object sender, KeyPressEventArgs e) => KeyHandler.CheckErrorKeyPressEvent(sender, txt_BT, lbl_error_TS, e, KeyHandler.NoneSpaceDigitHandler);
+        private void txt_BT_KeyPress(object sender, KeyPressEventArgs e) => KeyHandler.CheckErrorKeyPressEvent(sender, lbl_error_TS, e, KeyHandler.NoneSpaceDigitHandler);
 
         private void txt_BT_Leave(object sender, EventArgs e)
         {
@@ -283,7 +248,7 @@ namespace QLDiemSV_Winform.Form
             inputField_FillTongTS();
         }
 
-        private void txt_CC_KeyPress(object sender, KeyPressEventArgs e) => KeyHandler.CheckErrorKeyPressEvent(sender, txt_CC, lbl_error_TS, e, KeyHandler.NoneSpaceDigitHandler);
+        private void txt_CC_KeyPress(object sender, KeyPressEventArgs e) => KeyHandler.CheckErrorKeyPressEvent(sender, lbl_error_TS, e, KeyHandler.NoneSpaceDigitHandler);
 
         private void txt_CC_Leave(object sender, EventArgs e)
         {
@@ -292,7 +257,7 @@ namespace QLDiemSV_Winform.Form
             inputField_FillTongTS();
         }
 
-        private void txt_KT_KeyPress(object sender, KeyPressEventArgs e) => KeyHandler.CheckErrorKeyPressEvent(sender, txt_KT, lbl_error_TS, e, KeyHandler.NoneSpaceDigitHandler);
+        private void txt_KT_KeyPress(object sender, KeyPressEventArgs e) => KeyHandler.CheckErrorKeyPressEvent(sender, lbl_error_TS, e, KeyHandler.NoneSpaceDigitHandler);
 
         private void txt_KT_Leave(object sender, EventArgs e)
         {
@@ -301,11 +266,11 @@ namespace QLDiemSV_Winform.Form
             inputField_FillTongTS();
         }
 
-        private void txt_SoTinChi_KeyPress(object sender, KeyPressEventArgs e) => KeyHandler.CheckErrorKeyPressEvent(sender, txt_SoTinChi, lbl_error_SoTinChi, e, KeyHandler.CreditHandler);
+        private void txt_SoTinChi_KeyPress(object sender, KeyPressEventArgs e) => KeyHandler.CheckErrorKeyPressEvent(sender, lbl_error_SoTinChi, e, KeyHandler.CreditHandler);
 
         private void txt_SoTinChi_Leave(object sender, EventArgs e) => lbl_error_SoTinChi.Visible = false;
 
-        private void txt_Ten_KeyPress(object sender, KeyPressEventArgs e) => KeyHandler.CheckErrorKeyPressEvent(sender, txt_Ten, lbl_error_Ten, e, KeyHandler.DigitTextHandler);
+        private void txt_Ten_KeyPress(object sender, KeyPressEventArgs e) => KeyHandler.CheckErrorKeyPressEvent(sender, lbl_error_Ten, e, KeyHandler.DigitTextHandler);
 
         private void txt_Ten_Leave(object sender, EventArgs e)
         {
@@ -313,7 +278,7 @@ namespace QLDiemSV_Winform.Form
             txt_Ten.Text = Standardize.StandardizeText(txt_Ten.Text);
         }
 
-        private void txt_TH_KeyPress(object sender, KeyPressEventArgs e) => KeyHandler.CheckErrorKeyPressEvent(sender, txt_TH, lbl_error_TS, e, KeyHandler.NoneSpaceDigitHandler);
+        private void txt_TH_KeyPress(object sender, KeyPressEventArgs e) => KeyHandler.CheckErrorKeyPressEvent(sender, lbl_error_TS, e, KeyHandler.NoneSpaceDigitHandler);
 
         private void txt_TH_Leave(object sender, EventArgs e)
         {
@@ -322,7 +287,7 @@ namespace QLDiemSV_Winform.Form
             inputField_FillTongTS();
         }
 
-        private void txt_Thi_KeyPress(object sender, KeyPressEventArgs e) => KeyHandler.CheckErrorKeyPressEvent(sender, txt_Thi, lbl_error_TS, e, KeyHandler.NoneSpaceDigitHandler);
+        private void txt_Thi_KeyPress(object sender, KeyPressEventArgs e) => KeyHandler.CheckErrorKeyPressEvent(sender, lbl_error_TS, e, KeyHandler.NoneSpaceDigitHandler);
 
         private void txt_Thi_Leave(object sender, EventArgs e)
         {

@@ -36,9 +36,11 @@ namespace QLDiemSV_Winform.Support
                 }
         }
 
-        public static void OpenForm(dynamic form, string name)
+        public static void OpenForm(dynamic form)
         {
-            (bool isExist, TabPage currentTagPage) = CheckExists(name);
+            dynamic dynamicInstance = Activator.CreateInstance(form.GetType());
+            string formName = (string)dynamicInstance.GetType().GetField("FormName").GetValue(null); 
+            (bool isExist, TabPage currentTagPage) = CheckExists(formName);
             if (isExist == true)
             {
                 Program.formChinh.GetTabControl().SelectedTab = currentTagPage;
@@ -48,23 +50,14 @@ namespace QLDiemSV_Winform.Support
             form.TopLevel = false;
             form.FormBorderStyle = FormBorderStyle.None;
             form.Dock = DockStyle.Fill;
-            TabPage tabPage = new TabPage(name);
-            tabPage.Name = name;
+            TabPage tabPage = new TabPage(formName);
+            tabPage.Name = formName;
             tabPage.Controls.Add(form);
 
             Program.formChinh.GetTabControl().TabPages.Add(tabPage);
 
             form.Show();
             Program.formChinh.GetTabControl().SelectedTab = tabPage;
-        }
-
-        public static void OpenTab(string name)
-        {
-            (bool isExist, TabPage currentTagPage) = CheckExists(name);
-            if (isExist == true)
-            {
-                Program.formChinh.GetTabControl().SelectedTab = currentTagPage;
-            }
         }
     }
 }

@@ -9,30 +9,21 @@ using System.Net.Http;
 
 namespace QLDiemSV_Winform.ApiController
 {
-    internal class SinhVienApiController
+    internal class SinhVienController
     {
         private static readonly string Api_SinhVien_Url = Program.ApiBaseUrl + "/SinhVien";
 
-        public SinhVienApiController()
+        public SinhVienController()
         {
         }
 
-        public static EnumCode.ApiDeleteResult DeleteSinhVien(int maSinhVien)
+        public static HttpStatusCode DeleteSinhVien(int maSinhVien)
         {
-            try
+            using (var httpClient = new HttpClient())
             {
-                using (var httpClient = new HttpClient())
-                {
-                    HttpResponseMessage httpResponse = httpClient.DeleteAsync($"{Api_SinhVien_Url}/{maSinhVien}").Result;
-                    return httpResponse.IsSuccessStatusCode || httpResponse.StatusCode == HttpStatusCode.NoContent
-                        ? EnumCode.ApiDeleteResult.Success
-                        : EnumCode.ApiDeleteResult.Failure;
-                }
-            } catch (Exception ex)
-            {
-                // Handle exceptions or log errors as needed
-                Console.WriteLine($"Error deleting Sinh Vien: {ex.Message}");
-                return EnumCode.ApiDeleteResult.Failure;
+                HttpResponseMessage httpResponse = httpClient.DeleteAsync($"{Api_SinhVien_Url}/{maSinhVien}")
+                    .Result;
+                return httpResponse.StatusCode;
             }
         }
 

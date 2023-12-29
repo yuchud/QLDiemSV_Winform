@@ -10,6 +10,10 @@ namespace QLDiemSV_Winform.Form
 {
     public partial class Form_KhoiPhuc_MatKhau : DevExpress.XtraEditors.XtraForm
     {
+        private static readonly string Action = ConstantValues.ActionReset;
+        private static readonly string Target = ConstantValues.TargetPassword;
+        public static readonly string FormName = Action + (Action.Length > 0 && Target.Length > 0 ? " " : "") + Target;
+
         public Form_KhoiPhuc_MatKhau() { InitializeComponent(); }
 
         private void btn_Thoat_Click(object sender, EventArgs e) { TabManager.CloseForm(this); }
@@ -24,7 +28,7 @@ namespace QLDiemSV_Winform.Form
                 return;
             }
             string tenDangNhap = txt_TenDangNhap.Text;
-            if(GiangVienApiController.GetGiangVien(Convert.ToInt32(tenDangNhap)) == null)
+            if(GiangVienController.GetGiangVien(Convert.ToInt32(tenDangNhap)) == null)
             {
                 lbl_error_XacNhan.Text = "Không tìm thấy tên đăng nhập";
                 lbl_error_XacNhan.Visible = true;
@@ -32,37 +36,19 @@ namespace QLDiemSV_Winform.Form
             }
 
 
-            DialogResult dialogResult = MessageBox.Show(
-                "Bạn có chắc chắn khôi phục mật khẩu?",
-                "Xác nhận",
-                MessageBoxButtons.YesNo,
-                MessageBoxIcon.Question);
-            if(dialogResult == DialogResult.No)
+            if(MessageBoxManager.OpenMessageBox(Action, Target) == false)
                 return;
 
-            HttpStatusCode httpStatusCode = GiangVienApiController.PutMatKhau(
-                new DTO.TaiKhoanDTO(tenDangNhap, tenDangNhap));
+            bool isSuccessfull = MessageBoxManager.ShowResult(
+                GiangVienController.PutMatKhau(new DTO.TaiKhoanDTO(tenDangNhap, tenDangNhap)),
+                Action,
+                Target);
 
-            if(StatusCodeChecker.GetResponseClass(httpStatusCode) ==
-                EnumCode.HTTPResponseStatusClass.SuccessfulResponses)
-            {
-                MessageBox.Show(
-                    $"Đã khôi phục mật khẩu thành công!",
-                    "Success",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Information);
+            if(isSuccessfull)
                 txt_TenDangNhap.Text = string.Empty;
-            }
         }
 
         private void txt_MatKhau_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            KeyHandler.CheckErrorKeyPressEvent(
-                sender,
-                txt_TenDangNhap,
-                lbl_error_TenDangNhap,
-                e,
-                KeyHandler.NoneSpaceDigitHandler);
-        }
+        { KeyHandler.CheckErrorKeyPressEvent(sender, lbl_error_TenDangNhap, e, KeyHandler.NoneSpaceDigitHandler); }
     }
 }

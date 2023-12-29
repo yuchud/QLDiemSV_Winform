@@ -13,6 +13,9 @@ namespace QLDiemSV_Winform.Form
 {
     public partial class Form_Tao_LopTinChi : DevExpress.XtraEditors.XtraForm
     {
+        private static readonly string Action = ConstantValues.ActionCreate;
+        private static readonly string Target = ConstantValues.TargetCreditClass;
+        public static readonly string FormName = Action + (Action.Length > 0 && Target.Length > 0 ? " " : "") + Target;
         private List<LopTinChiDTO> lopTinChiList;
 
         public Form_Tao_LopTinChi()
@@ -32,24 +35,7 @@ namespace QLDiemSV_Winform.Form
                 int maMonHoc = subForm_Lay_MonHoc.MaMonHoc;
                 if (maMonHoc != 0)
                 {
-                    HttpStatusCode httpStatusCode = LopTinChiApiController.PostLopTinChi(dataLopTinChi_Create(maMonHoc));
-
-                    if (StatusCodeChecker.GetResponseClass(httpStatusCode) ==
-                        EnumCode.HTTPResponseStatusClass.SuccessfulResponses)
-                    {
-                        MessageBox.Show(
-                            $"Thêm lớp tín chỉ thành công!",
-                            "Success",
-                            MessageBoxButtons.OK,
-                            MessageBoxIcon.Information);
-                        form_LoadInitial();
-                    }
-                    else
-                        MessageBox.Show(
-                            $"Thêm lớp tín chỉ thất bại. Status code: {httpStatusCode}",
-                            "Error",
-                            MessageBoxButtons.OK,
-                            MessageBoxIcon.Error);
+                    if (MessageBoxManager.ShowResult(LopTinChiController.PostLopTinChi(dataLopTinChi_Create(maMonHoc)), Action, Target)) form_LoadInitial();
                 }
             }
         }
@@ -58,7 +44,7 @@ namespace QLDiemSV_Winform.Form
 
         private (bool canDelete, string error) btn_Xoa_CheckBeforeDelete(int maLopTinChi)
         {
-            if (BangDiemApiController.GetListBangDiemByMaLopTinChi(maLopTinChi).Count > 0)
+            if (BangDiemController.GetListBangDiemByMaLopTinChi(maLopTinChi).Count > 0)
                 return (false, "Không thể xóa lớp tín chỉ đã có bảng điểm");
             return (true, string.Empty);
         }
@@ -75,24 +61,9 @@ namespace QLDiemSV_Winform.Form
                 return;
             }
 
-            DialogResult dialogResult = MessageBox.Show(
-                "Bạn có chắc chắn xóa lớp tín chỉ này này?",
-                "Xác nhận",
-                MessageBoxButtons.YesNo,
-                MessageBoxIcon.Question);
-            if (dialogResult == DialogResult.No)
-                return;
-            bool isDeletionSuccessful = LopTinChiApiController.DeleteLopTinChi(maLopTinChi) ==
-                EnumCode.ApiDeleteResult.Success;
+            if (MessageBoxManager.OpenMessageBox(ConstantValues.ActionDelete, Target) == false) return;
 
-            if (isDeletionSuccessful)
-            {
-                MessageBox.Show("Xóa lớp tín chỉ này thành công!");
-                form_LoadInitial();
-                // Perform additional actions after a successful deletion if needed
-            }
-            else
-                MessageBox.Show("Xóa lớp tín chỉ này thất bại.");
+            if (MessageBoxManager.ShowResult(LopTinChiController.DeleteLopTinChi(maLopTinChi), ConstantValues.ActionDelete, Target)) form_LoadInitial();
         }
 
         private void cmb_Khoa_SelectedIndexChanged(object sender, EventArgs e)
@@ -147,7 +118,7 @@ namespace QLDiemSV_Winform.Form
         private void dgv_LopTinChi_LoadData()
         {
             int nam = Convert.ToInt32(cmb_Nam.SelectedItem);
-            lopTinChiList = LopTinChiApiController.GetListLopTinChiByNamHoc(nam);
+            lopTinChiList = LopTinChiController.GetListLopTinChiByNamHoc(nam);
             foreach (LopTinChiDTO lopTinChi in lopTinChiList)
                 lopTinChi.Generate_TenMonHoc();
 

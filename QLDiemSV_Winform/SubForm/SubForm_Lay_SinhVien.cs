@@ -56,7 +56,7 @@ namespace QLDiemSV_Winform.SubForm
 
         private List<SinhVienDTO> dataSinhVienList_Create()
         {
-            List<SinhVienDTO> sinhVienList = SinhVienApiController.GetListSinhVienByMaLopSinhVien(maLopSinhVien);
+            List<SinhVienDTO> sinhVienList = SinhVienController.GetListSinhVienByMaLopSinhVien(maLopSinhVien);
             List<SinhVienDTO> currentSinhVienList = new List<SinhVienDTO>();
             foreach (SinhVienDTO SinhVien in sinhVienList)
             {

@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using QLDiemSV_Winform.ApiController;
 using QLDiemSV_Winform.DTO;
 using QLDiemSV_Winform.Secure;
 using QLDiemSV_Winform.Support;
@@ -12,8 +13,9 @@ namespace QLDiemSV_Winform
 {
     public partial class Form_DangNhap : DevExpress.XtraEditors.XtraForm
     {
-        private readonly string Api_DangNhap_Url = Program.ApiBaseUrl + "/Login";
-
+        private static readonly string Action = ConstantValues.ActionLogin;
+        private static readonly string Target = "";
+        public static readonly string FormName = Action + (Action.Length > 0 && Target.Length > 0 ? " " : "") + Target;
         public Form_DangNhap() { InitializeComponent(); }
 
         private void btn_DangNhap_Click(object sender, EventArgs e)
@@ -24,20 +26,20 @@ namespace QLDiemSV_Winform
                 string tenDangNhap = txt_TenDangNhap.Text;
                 string matKhau = txt_MatKhau.Text;
 
-                if (tenDangNhap.Length == 0)
+                if(tenDangNhap.Length == 0)
                 {
                     lb_error_TenDangNhap.Visible = true;
                     lb_error_TenDangNhap.Text = "Vui lòng nhập tên đăng nhập";
                     return;
-                } else if (tenDangNhap.Length == 0)
+                } else if(tenDangNhap.Length == 0)
                 {
                     lb_error_MatKhau.Visible = true;
                     lb_error_MatKhau.Text = "Vui lòng nhập mật khẩu";
                     return;
                 }
 
-                bool isLoginSucessful = dataDangNhap_PostApi(tenDangNhap, matKhau) == "true";
-                if (isLoginSucessful)
+                bool isLoginSucessful = DangNhapController.PostDangNhap(tenDangNhap, matKhau) == "true";
+                if(isLoginSucessful)
                 {
                     SecureStorage.SaveCredentials(tenDangNhap, matKhau);
                     TabManager.CloseAllForm();
@@ -47,53 +49,19 @@ namespace QLDiemSV_Winform
                     lb_error_DangNhap.Visible = true;
                     lb_error_DangNhap.Text = "Nhập sai tài khoản hoặc mật khẩu";
                 }
-            } catch (Exception ex)
+            } catch(Exception ex)
             {
                 MessageBox.Show($"Có lỗi xảy ra: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
 
-        private void btn_Thoat_Click(object sender, EventArgs e) => CloseForm();
+        private void btn_Thoat_Click(object sender, EventArgs e) => TabManager.CloseForm(this);
 
-        private void btn_TogglePwd_Click(object sender, EventArgs e) => txt_MatKhau.UseSystemPasswordChar =
-            !txt_MatKhau.UseSystemPasswordChar;
+        private void btn_TogglePwd_Click(object sender, EventArgs e)
+        { txt_MatKhau.UseSystemPasswordChar = !txt_MatKhau.UseSystemPasswordChar; }
 
-        private string dataDangNhap_PostApi(string tenDangNhap, string matKhau)
-        {
-            using (var httpClient = new HttpClient())
-            {
-                string jsonGiangVien = jsonDangNhap_create(tenDangNhap, matKhau);
-                HttpResponseMessage response = httpClient.PostAsync(
-                    $"{Api_DangNhap_Url}/GiangVien",
-                    new StringContent(jsonGiangVien, System.Text.Encoding.UTF8, "application/json"))
-                    .Result;
-                return response.Content.ReadAsStringAsync().Result;
-            }
-        }
-
-
-        private string jsonDangNhap_create(string tenDangNhap, string matKhau) => JsonConvert.SerializeObject(
-            new TaiKhoanDTO(tenDangNhap, matKhau));
-
-
-        private void txt_TenDangNhap_KeyPress(object sender, KeyPressEventArgs e) => KeyHandler.CheckErrorKeyPressEvent(
-            sender,
-            txt_TenDangNhap,
-            lb_error_TenDangNhap,
-            e,
-            KeyHandler.NoneSpaceDigitHandler);
-
-        public void CloseForm()
-        {
-            foreach (TabPage tabPage in Program.formChinh.GetTabControl().TabPages)
-                if (tabPage.Controls.Contains(this))
-                {
-                    Program.formChinh.GetTabControl().TabPages.Remove(tabPage);
-                    tabPage.Dispose();
-                    break;
-                }
-            this.Close();
-        }
+        private void txt_TenDangNhap_KeyPress(object sender, KeyPressEventArgs e)
+        { KeyHandler.CheckErrorKeyPressEvent(sender, lb_error_TenDangNhap, e, KeyHandler.NoneSpaceDigitHandler); }
     }
 }

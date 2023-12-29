@@ -21,7 +21,7 @@ namespace QLDiemSV_Winform.Secure
         {
             try
             {
-                List<QuyenDTO> listQuyen = QuyenApiController.GetListQuyen();
+                List<QuyenDTO> listQuyen = QuyenController.GetListQuyen();
                 Dictionary<int, EnumCode.Decentralization> keyValuePairs = new Dictionary<int, EnumCode.Decentralization>(
                         );
                 foreach (QuyenDTO quyen in listQuyen)

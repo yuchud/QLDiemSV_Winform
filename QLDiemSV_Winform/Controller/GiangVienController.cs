@@ -9,41 +9,30 @@ using System.Net.Http;
 
 namespace QLDiemSV_Winform.Controller
 {
-    internal class GiangVienApiController
+    internal class GiangVienController
     {
         private static readonly string Api_GiangVien_Url = Program.ApiBaseUrl + "/GiangVien";
 
-        public GiangVienApiController()
+        public GiangVienController()
         {
         }
 
 
-        public static EnumCode.ApiDeleteResult DeleteGiangVien(int maGiangVien)
+        public static HttpStatusCode DeleteGiangVien(int maGiangVien)
         {
-            try
+            using(var httpClient = new HttpClient())
             {
-                using (var httpClient = new HttpClient())
-                {
-                    HttpResponseMessage httpResponse = httpClient.DeleteAsync($"{Api_GiangVien_Url}/{maGiangVien}")
-                        .Result;
-                    return httpResponse.IsSuccessStatusCode || httpResponse.StatusCode == HttpStatusCode.NoContent
-                        ? EnumCode.ApiDeleteResult.Success
-                        : EnumCode.ApiDeleteResult.Failure;
-                }
-            } catch (Exception ex)
-            {
-                // Handle exceptions or log errors as needed
-                Console.WriteLine($"Error deleting GiangVien: {ex.Message}");
-                return EnumCode.ApiDeleteResult.Failure;
+                HttpResponseMessage httpResponse = httpClient.DeleteAsync($"{Api_GiangVien_Url}/{maGiangVien}").Result;
+                return httpResponse.StatusCode;
             }
         }
 
         public static GiangVienDTO GetGiangVien(int maGiangVien)
         {
-            using (var httpClient = new HttpClient())
+            using(var httpClient = new HttpClient())
             {
                 HttpResponseMessage httpResponse = httpClient.GetAsync($"{Api_GiangVien_Url}/{maGiangVien}").Result;
-                if (httpResponse.IsSuccessStatusCode)
+                if(httpResponse.IsSuccessStatusCode)
                 {
                     string json = httpResponse.Content.ReadAsStringAsync().Result;
                     GiangVienDTO GiangVien = JsonConvert.DeserializeObject<GiangVienDTO>(json);
@@ -57,14 +46,14 @@ namespace QLDiemSV_Winform.Controller
 
         public static List<GiangVienDTO> GetListGiangVienByMaKhoa(int MaKhoa)
         {
-            using (var httpClient = new HttpClient())
+            using(var httpClient = new HttpClient())
             {
                 HttpResponseMessage httpResponse = httpClient.GetAsync($"{Api_GiangVien_Url}/maKhoa={MaKhoa}").Result;
-                if (httpResponse.IsSuccessStatusCode)
+                if(httpResponse.IsSuccessStatusCode)
                 {
                     string json = httpResponse.Content.ReadAsStringAsync().Result;
                     List<GiangVienDTO> DsGiangVien = JsonConvert.DeserializeObject<List<GiangVienDTO>>(json);
-                    foreach (GiangVienDTO giangVien in DsGiangVien)
+                    foreach(GiangVienDTO giangVien in DsGiangVien)
                     {
                         giangVien.GenerateChucVu();
                     }
@@ -76,7 +65,7 @@ namespace QLDiemSV_Winform.Controller
 
         public static HttpStatusCode PostGiangVien(GiangVienDTO giangVien)
         {
-            using (var httpClient = new HttpClient())
+            using(var httpClient = new HttpClient())
             {
                 string jsonGiangVien = JsonConvert.SerializeObject(giangVien);
                 HttpResponseMessage response = httpClient.PostAsync(
@@ -89,7 +78,7 @@ namespace QLDiemSV_Winform.Controller
 
         public static HttpStatusCode PutGiangVien(GiangVienDTO giangVien)
         {
-            using (var httpClient = new HttpClient())
+            using(var httpClient = new HttpClient())
             {
                 string jsonGiangVien = JsonConvert.SerializeObject(giangVien);
                 HttpResponseMessage response = httpClient.PutAsync(
@@ -102,7 +91,7 @@ namespace QLDiemSV_Winform.Controller
 
         public static HttpStatusCode PutMatKhau(TaiKhoanDTO taiKhoan)
         {
-            using (var httpClient = new HttpClient())
+            using(var httpClient = new HttpClient())
             {
                 string jsonTaiKhoan = JsonConvert.SerializeObject(taiKhoan);
                 HttpResponseMessage response = httpClient.PutAsync(

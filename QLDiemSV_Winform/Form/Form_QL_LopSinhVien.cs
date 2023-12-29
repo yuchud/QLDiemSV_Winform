@@ -1,4 +1,5 @@
 ﻿using QLDiemSV_Winform.ApiController;
+using QLDiemSV_Winform.Controller;
 using QLDiemSV_Winform.DTO;
 using QLDiemSV_Winform.Support;
 using QLDiemSV_Winform.Validation;
@@ -11,6 +12,10 @@ namespace QLDiemSV_Winform.Form
 {
     public partial class Form_QL_LopSinhVien : DevExpress.XtraEditors.XtraForm
     {
+
+        private static readonly string Action = ConstantValues.ActionManage;
+        private static readonly string Target = ConstantValues.TargetStudentClass;
+        public static readonly string FormName = Action + (Action.Length > 0 && Target.Length > 0 ? " " : "") + Target;
         public Form_QL_LopSinhVien()
         {
             InitializeComponent();
@@ -36,55 +41,38 @@ namespace QLDiemSV_Winform.Form
 
         private void btn_XacNhan_Click(object sender, EventArgs e)
         {
-            bool isNoneEmptyField = inputField_CheckNoneEmpty();
-            bool isAdd = txt_Ma.Text == "0";
-            string action = (isAdd) ? "thêm" : "chỉnh sửa";
-            if (isNoneEmptyField)
-            {
-                DialogResult dialogResult = MessageBox.Show(
-                    $"Bạn có chắc chắn {action} lớp sinh viên này?",
-                    "Xác nhận",
-                    MessageBoxButtons.YesNo,
-                    MessageBoxIcon.Question);
-                if (dialogResult == DialogResult.No)
-                    return;
-                HttpStatusCode httpStatusCode;
-                if (isAdd)
-                    httpStatusCode = LopSinhVienApiController.PostLopSinhVien(dataLopSinhVien_Create(0));
-                else
-                    httpStatusCode = LopSinhVienApiController.PutLopSinhVien(
-                        dataLopSinhVien_Create(Convert.ToInt32(txt_Ma.Text)));
+            if (inputField_CheckNoneEmpty() == false) return;
+            bool isAdding = txt_Ma.Text == "0";
+            string editAction = (isAdding) ? ConstantValues.ActionCreate : ConstantValues.ActionUpdate;
 
-                if (StatusCodeChecker.GetResponseClass(httpStatusCode) ==
-                    EnumCode.HTTPResponseStatusClass.SuccessfulResponses)
-                {
-                    MessageBox.Show(
-                        $"Đã {action} lớp sinh viên thành công!",
-                        "Success",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Information);
-                    if (isAdd)
-                        form_LoadInitial();
-                    else
-                    {
-                        int currentSelectedRow = dgv_LopSinhVien.SelectedRows[0].Index;
-                        dgv_LopSinhVien_FillData(dataMaKhoa_Get());
-                        dgv_LopSinhVien.Rows[currentSelectedRow].Selected = true;
-                    }
-                }
+            if (MessageBoxManager.OpenMessageBox(editAction, Target) == false)
+                return;
+
+            HttpStatusCode httpStatusCode;
+            if (isAdding)
+                httpStatusCode = LopSinhVienController.PostLopSinhVien(dataLopSinhVien_Create(0));
+            else
+                httpStatusCode = LopSinhVienController.PutLopSinhVien(
+                    dataLopSinhVien_Create(Convert.ToInt32(txt_Ma.Text)));
+
+            bool isSuccessful = MessageBoxManager.ShowResult(httpStatusCode, editAction, Target);
+            if (isSuccessful)
+            {
+                if (isAdding)
+                    form_LoadInitial();
                 else
-                    MessageBox.Show(
-                        $"{action} thất bại. Status code: {httpStatusCode}",
-                        "Error",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Error);
-                inputField_Close();
+                {
+                    int currentSelectedRow = dgv_LopSinhVien.SelectedRows[0].Index;
+                    dgv_LopSinhVien_FillData(dataMaKhoa_Get());
+                    dgv_LopSinhVien.Rows[currentSelectedRow].Selected = true;
+                }
             }
+            inputField_Close();
         }
 
         private (bool canDelete, string error) btn_Xoa_CheckBeforeDelete(int maLopSinhVien)
         {
-            if (LopSinhVienApiController.GetListLopSinhVienByMaKhoa(maLopSinhVien).Count > 0)
+            if (LopSinhVienController.GetListLopSinhVienByMaKhoa(maLopSinhVien).Count > 0)
                 return (false, "Lớp sinh viên đang có sinh viên");
             return (true, string.Empty);
         }
@@ -101,29 +89,14 @@ namespace QLDiemSV_Winform.Form
                 return;
             }
 
-            DialogResult dialogResult = MessageBox.Show(
-                "Bạn có chắc chắn xóa lớp sinh viên này?",
-                "Xác nhận",
-                MessageBoxButtons.YesNo,
-                MessageBoxIcon.Question);
-            if (dialogResult == DialogResult.No)
-                return;
-            bool isDeletionSuccessful = LopSinhVienApiController.DeleteLopSinhVien(maLopSinhVien) ==
-                EnumCode.ApiDeleteResult.Success;
+            if (MessageBoxManager.OpenMessageBox(ConstantValues.ActionDelete, Target) == false) return;
 
-            if (isDeletionSuccessful)
-            {
-                MessageBox.Show("Xóa lớp sinh viên thành công!");
-                form_LoadInitial();
-                // Perform additional actions after a successful deletion if needed
-            }
-            else
-                MessageBox.Show("Xóa lớp sinh viên thất bại.");
+            if (MessageBoxManager.ShowResult(LopSinhVienController.DeleteLopSinhVien(maLopSinhVien), ConstantValues.ActionDelete, Target)) form_LoadInitial();
         }
 
         private void cmb_Khoa_FillData()
         {
-            cmb_Khoa.DataSource = KhoaApiController.GetAllKhoa();
+            cmb_Khoa.DataSource = KhoaController.GetAllKhoa();
             cmb_Khoa.DisplayMember = "tenKhoa";
             cmb_Khoa.ValueMember = "maKhoa";
         }
@@ -155,7 +128,7 @@ namespace QLDiemSV_Winform.Form
 
         private void dgv_LopSinhVien_FillData(int MaKhoa)
         {
-            dgv_LopSinhVien.DataSource = LopSinhVienApiController.GetListLopSinhVienByMaKhoa(MaKhoa);
+            dgv_LopSinhVien.DataSource = LopSinhVienController.GetListLopSinhVienByMaKhoa(MaKhoa);
             DataGridViewManager.HideColumn(dgv_LopSinhVien, "maKhoa");
             lbl_SoLuong.Text = dgv_LopSinhVien.RowCount.ToString();
             dgv_LopSinhVien.ClearSelection();
@@ -202,7 +175,7 @@ namespace QLDiemSV_Winform.Form
                 inputField_ClearAllData();
                 return;
             }
-            LopSinhVienDTO lopSinhVien = LopSinhVienApiController.GetLopSinhVien(maLopSinhVien);
+            LopSinhVienDTO lopSinhVien = LopSinhVienController.GetLopSinhVien(maLopSinhVien);
             txt_Ma.Enabled = true;
             txt_Ma.Text = lopSinhVien.MaLopSv.ToString();
             txt_Ma.Enabled = false;
@@ -228,7 +201,7 @@ namespace QLDiemSV_Winform.Form
             txt_Ma.Enabled = false;
         }
 
-        private void txt_Ten_KeyPress(object sender, KeyPressEventArgs e) => KeyHandler.CheckErrorKeyPressEvent(sender, txt_Ten, lbl_error_Ten, e, KeyHandler.DigitTextHandler);
+        private void txt_Ten_KeyPress(object sender, KeyPressEventArgs e) => KeyHandler.CheckErrorKeyPressEvent(sender, lbl_error_Ten, e, KeyHandler.DigitTextHandler);
 
         private void txt_Ten_Leave(object sender, EventArgs e)
         {

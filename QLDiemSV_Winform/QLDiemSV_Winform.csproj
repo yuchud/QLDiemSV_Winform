@@ -12,6 +12,24 @@
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>D:\Workspace\CSharp\PhanMemQuanLyDiemSinhVien_HDV\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <UpdateUrl>http://localhost/QLDiemSV_Winform/</UpdateUrl>
+    <AutorunEnabled>true</AutorunEnabled>
+    <ApplicationRevision>6</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -31,6 +49,18 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>1F6CE703FFF1E3AA77BF7522B3EFF99C7F8C047B</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>QLDiemSV_Winform_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>true</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>true</SignManifests>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="CredentialManagement, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
@@ -58,14 +88,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ApiController\BangDiemApiController.cs" />
-    <Compile Include="ApiController\GiangVienApiController.cs" />
-    <Compile Include="ApiController\KhoaApiController.cs" />
-    <Compile Include="ApiController\LopSinhVienApiController.cs" />
-    <Compile Include="ApiController\LopTinChiApiController.cs" />
-    <Compile Include="ApiController\MonHocApiController.cs" />
-    <Compile Include="ApiController\QuyenApiController.cs" />
-    <Compile Include="ApiController\SinhVienApiController.cs" />
+    <Compile Include="Controller\BangDiemController.cs" />
+    <Compile Include="Controller\DangNhapController.cs" />
+    <Compile Include="Controller\GiangVienController.cs" />
+    <Compile Include="Controller\KhoaController.cs" />
+    <Compile Include="Controller\LopSinhVienController.cs" />
+    <Compile Include="Controller\LopTinChiController.cs" />
+    <Compile Include="Controller\MonHocController.cs" />
+    <Compile Include="Controller\QuyenController.cs" />
+    <Compile Include="Controller\SinhVienController.cs" />
     <Compile Include="DTO\BangDiemDTO.cs" />
     <Compile Include="DTO\BangDiemInfoDTO.cs" />
     <Compile Include="DTO\TaiKhoanDTO.cs" />
@@ -169,6 +200,7 @@
     <Compile Include="SubForm\SubForm_Lay_SinhVien.Designer.cs">
       <DependentUpon>SubForm_Lay_SinhVien.cs</DependentUpon>
     </Compile>
+    <Compile Include="Support\MessageBoxManager.cs" />
     <Compile Include="Support\SubjectPairGenerator.cs" />
     <Compile Include="Secure\TeacherDecentralization.cs" />
     <Compile Include="SubForm\SubForm_Lay_LopSinhVien.cs">
@@ -253,9 +285,22 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="QLDiemSV_Winform_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.7.2 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

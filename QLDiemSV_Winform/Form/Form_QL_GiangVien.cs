@@ -14,6 +14,9 @@ namespace QLDiemSV_Winform.Form
 {
     public partial class Form_QL_GiangVien : DevExpress.XtraEditors.XtraForm
     {
+        private static readonly string Action = ConstantValues.ActionManage;
+        private static readonly string Target = ConstantValues.TargetTeacher;
+        public static readonly string FormName = Action + (Action.Length > 0 && Target.Length > 0 ? " " : "") + Target;
         public Form_QL_GiangVien()
         {
             InitializeComponent();
@@ -40,78 +43,46 @@ namespace QLDiemSV_Winform.Form
 
         private void btn_XacNhan_Click(object sender, EventArgs e)
         {
-            bool isNoneEmptyField = inputField_CheckNoneEmpty();
-            bool isAdd = txt_Ma.Text == "0";
-            string action = (isAdd) ? "thêm" : "chỉnh sửa";
-            if (isNoneEmptyField)
-            {
-                DialogResult dialogResult = MessageBox.Show(
-                    $"Bạn có chắc chắn {action} giảng viên này?",
-                    "Xác nhận",
-                    MessageBoxButtons.YesNo,
-                    MessageBoxIcon.Question);
-                if (dialogResult == DialogResult.No)
-                    return;
-                HttpStatusCode httpStatusCode;
-                if (isAdd)
-                    httpStatusCode = GiangVienApiController.PostGiangVien(dataGiangVien_Create(0));
-                else
-                    httpStatusCode = GiangVienApiController.PutGiangVien(
-                        dataGiangVien_Create(Convert.ToInt32(txt_Ma.Text)));
+            if (inputField_CheckNoneEmpty() == false) return;
+            bool isAdding = txt_Ma.Text == "0";
+            string editAction = (isAdding) ? ConstantValues.ActionCreate : ConstantValues.ActionUpdate;
 
-                if (StatusCodeChecker.GetResponseClass(httpStatusCode) ==
-                    EnumCode.HTTPResponseStatusClass.SuccessfulResponses)
-                {
-                    MessageBox.Show(
-                        $"Đã {action} giảng viên thành công!",
-                        "Success",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Information);
-                    if (isAdd)
-                        form_LoadInitial();
-                    else
-                    {
-                        int currentSelectedRow = dgv_GiangVien.SelectedRows[0].Index;
-                        dgv_GiangVien_FillData(dataMaKhoa_Get());
-                        dgv_GiangVien.Rows[currentSelectedRow].Selected = true;
-                    }
-                }
+            if (MessageBoxManager.OpenMessageBox(editAction, Target) == false)
+                return;
+
+            HttpStatusCode httpStatusCode;
+            if (isAdding)
+                httpStatusCode = GiangVienController.PostGiangVien(dataGiangVien_Create(0));
+            else
+                httpStatusCode = GiangVienController.PutGiangVien(
+                    dataGiangVien_Create(Convert.ToInt32(txt_Ma.Text)));
+
+            bool isSuccessful = MessageBoxManager.ShowResult(httpStatusCode, editAction, Target);
+            if(isSuccessful)
+            {
+                if (isAdding)
+                    form_LoadInitial();
                 else
-                    MessageBox.Show(
-                        $"{action} thất bại. Status code: {httpStatusCode}",
-                        "Error",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Error);
-                inputField_Close();
+                {
+                    int currentSelectedRow = dgv_GiangVien.SelectedRows[0].Index;
+                    dgv_GiangVien_FillData(dataMaKhoa_Get());
+                    dgv_GiangVien.Rows[currentSelectedRow].Selected = true;
+                }
             }
+            inputField_Close();
         }
 
         private void btn_Xoa_Click(object sender, EventArgs e)
         {
             int maGiangVien = Convert.ToInt32(txt_Ma.Text);
-            DialogResult dialogResult = MessageBox.Show(
-                "Bạn có chắc chắn xóa giảng viên này?",
-                "Xác nhận",
-                MessageBoxButtons.YesNo,
-                MessageBoxIcon.Question);
-            if (dialogResult == DialogResult.No)
-                return;
-            bool isDeletionSuccessful = GiangVienApiController.DeleteGiangVien(maGiangVien) ==
-                EnumCode.ApiDeleteResult.Success;
+            if (MessageBoxManager.OpenMessageBox(ConstantValues.ActionDelete, Target) == false) return;
 
-            if (isDeletionSuccessful)
-            {
-                MessageBox.Show("Xóa giảng viên thành công!");
-                form_LoadInitial();
-                // Perform additional actions after a successful deletion if needed
-            }
-            else
-                MessageBox.Show("Xóa giảng viên thất bại.");
+            if (MessageBoxManager.ShowResult(GiangVienController.DeleteGiangVien(maGiangVien), ConstantValues.ActionDelete, Target)) form_LoadInitial();
         }
 
         private void cmb_Khoa_FillData()
         {
-            cmb_Khoa.DataSource = KhoaApiController.GetAllKhoa();
+            cmb_Khoa.DataSource = KhoaController.GetAllKhoa();
             cmb_Khoa.DisplayMember = "tenKhoa";
             cmb_Khoa.ValueMember = "maKhoa";
         }
@@ -151,7 +122,7 @@ namespace QLDiemSV_Winform.Form
 
         private void dgv_GiangVien_FillData(int MaKhoa)
         {
-            dgv_GiangVien.DataSource = GiangVienApiController.GetListGiangVienByMaKhoa(MaKhoa);
+            dgv_GiangVien.DataSource = GiangVienController.GetListGiangVienByMaKhoa(MaKhoa);
             DataGridViewManager.HideColumn(dgv_GiangVien, "maKhoa");
             DataGridViewManager.HideColumn(dgv_GiangVien, "maQuyen");
             lbl_SoLuong.Text = dgv_GiangVien.RowCount.ToString();
@@ -216,7 +187,7 @@ namespace QLDiemSV_Winform.Form
                 inputField_ClearAllData();
                 return;
             }
-            GiangVienDTO GiangVien = GiangVienApiController.GetGiangVien(maGiangVien);
+            GiangVienDTO GiangVien = GiangVienController.GetGiangVien(maGiangVien);
             txt_Ma.Enabled = true;
             txt_Ma.Text = GiangVien.MaGv.ToString();
             txt_Ma.Enabled = false;
@@ -258,7 +229,10 @@ namespace QLDiemSV_Winform.Form
                 giangVien.GenerateChucVu();
         }
 
-        private void txt_DiaChi_KeyPress(object sender, KeyPressEventArgs e) => KeyHandler.CheckErrorKeyPressEvent(sender, txt_DiaChi, lbl_error_DiaChi, e, KeyHandler.AddressHandler);
+        private void txt_DiaChi_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            KeyHandler.CheckErrorKeyPressEvent(sender, lbl_error_DiaChi, e, KeyHandler.AddressHandler);
+        }
 
         private void txt_DiaChi_Leave(object sender, EventArgs e)
         {
@@ -266,7 +240,10 @@ namespace QLDiemSV_Winform.Form
             txt_DiaChi.Text = Standardize.StandardizeText(txt_DiaChi.Text);
         }
 
-        private void txt_Ho_KeyPress(object sender, KeyPressEventArgs e) => KeyHandler.CheckErrorKeyPressEvent(sender, txt_Ho, lbl_error_Ho, e, KeyHandler.TextHandler);
+        private void txt_Ho_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            KeyHandler.CheckErrorKeyPressEvent(sender, lbl_error_Ho, e, KeyHandler.TextHandler);
+        }
 
         private void txt_Ho_Leave(object sender, EventArgs e)
         {
@@ -274,9 +251,15 @@ namespace QLDiemSV_Winform.Form
             txt_Ho.Text = Standardize.StandardizeText(txt_Ho.Text);
         }
 
-        private void txt_SDT_KeyPress(object sender, KeyPressEventArgs e) => KeyHandler.CheckErrorKeyPressEvent(sender, txt_SDT, lbl_error_SDT, e, KeyHandler.NoneSpaceTeleNumberHandler);
+        private void txt_SDT_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            KeyHandler.CheckErrorKeyPressEvent(sender, lbl_error_SDT, e, KeyHandler.NoneSpaceTeleNumberHandler);
+        }
 
-        private void txt_Ten_KeyPress(object sender, KeyPressEventArgs e) => KeyHandler.CheckErrorKeyPressEvent(sender, txt_Ten, lbl_error_Ten, e, KeyHandler.TextHandler);
+        private void txt_Ten_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            KeyHandler.CheckErrorKeyPressEvent(sender, lbl_error_Ten, e, KeyHandler.TextHandler);
+        }
 
         private void txt_Ten_Leave(object sender, EventArgs e)
         {

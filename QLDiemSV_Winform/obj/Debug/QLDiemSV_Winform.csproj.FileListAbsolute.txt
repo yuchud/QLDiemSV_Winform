@@ -85,3 +85,7 @@ D:\Workspace\CSharp\Microservices\Winform_DoAn\QLDiemSV_Winform\obj\Debug\QLDiem
 D:\Workspace\CSharp\Microservices\Winform_DoAn\QLDiemSV_Winform\obj\Debug\QLDiemSV_Winform.Form.FormQuanLy.Form_QL_Khoa.resources
 D:\Workspace\CSharp\Microservices\Winform_DoAn\QLDiemSV_Winform\obj\Debug\QLDiemSV_Winform.Form_DangNhap.resources
 D:\Workspace\CSharp\Microservices\Winform_DoAn\QLDiemSV_Winform\obj\Debug\QLDiemSV_Winform.Form.Form_KhoiPhuc_MatKhau.resources
+D:\Workspace\CSharp\Microservices\Winform_DoAn\QLDiemSV_Winform\bin\Debug\QLDiemSV_Winform.exe.manifest
+D:\Workspace\CSharp\Microservices\Winform_DoAn\QLDiemSV_Winform\bin\Debug\QLDiemSV_Winform.application
+D:\Workspace\CSharp\Microservices\Winform_DoAn\QLDiemSV_Winform\obj\Debug\QLDiemSV_Winform.exe.manifest
+D:\Workspace\CSharp\Microservices\Winform_DoAn\QLDiemSV_Winform\obj\Debug\QLDiemSV_Winform.application

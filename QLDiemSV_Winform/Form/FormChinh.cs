@@ -19,9 +19,7 @@ namespace QLDiemSV_Winform
             ShowMenu();
         }
 
-        private void btn_DangNhap_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e) => TabManager.OpenForm(
-            new Form_DangNhap(),
-            ConstantValues.TenFormDangNhap);
+        private void btn_DangNhap_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e) => TabManager.OpenForm(new Form_DangNhap());
 
         private void btn_DangXuat_ItemClick(object sender, ItemClickEventArgs e)
         {
@@ -33,38 +31,24 @@ namespace QLDiemSV_Winform
         private void btn_DoiMatKhau_ItemClick(object sender, ItemClickEventArgs e)
         {
             if(SecureStorage.GetQuyen() == EnumCode.Decentralization.None)
-                TabManager.OpenForm(new Form_KhoiPhuc_MatKhau(), ConstantValues.TenFormKhoiPhucMatKhau);
+                TabManager.OpenForm(new Form_KhoiPhuc_MatKhau());
             else
-                TabManager.OpenForm(new Form_Doi_MatKhau(), ConstantValues.TenFormDoiMatKhau);
+                TabManager.OpenForm(new Form_Doi_MatKhau());
         }
 
-        private void btn_NhapDiem_ItemClick(object sender, ItemClickEventArgs e) => TabManager.OpenForm(
-            new Form_Nhap_DiemSinhVien(),
-            ConstantValues.TenFormNhapDiem);
+        private void btn_NhapDiem_ItemClick(object sender, ItemClickEventArgs e) => TabManager.OpenForm(new Form_Nhap_DiemSinhVien());
 
-        private void btn_QL_GiangVien_ItemClick(object sender, ItemClickEventArgs e) => TabManager.OpenForm(
-            new Form_QL_GiangVien(),
-            ConstantValues.TenFormQuanLyGiangVien);
+        private void btn_QL_GiangVien_ItemClick(object sender, ItemClickEventArgs e) => TabManager.OpenForm(new Form_QL_GiangVien());
 
-        private void btn_QL_LopSinhVien_ItemClick(object sender, ItemClickEventArgs e) => TabManager.OpenForm(
-            new Form_QL_LopSinhVien(),
-            ConstantValues.TenFormQuanLyLopSinhVien);
+        private void btn_QL_LopSinhVien_ItemClick(object sender, ItemClickEventArgs e) => TabManager.OpenForm(new Form_QL_LopSinhVien());
 
-        private void btn_QL_MonHoc_ItemClick(object sender, ItemClickEventArgs e) => TabManager.OpenForm(
-            new Form_QL_MonHoc(),
-            ConstantValues.TenFormQuanLyMonHoc);
+        private void btn_QL_MonHoc_ItemClick(object sender, ItemClickEventArgs e) => TabManager.OpenForm(new Form_QL_MonHoc());
 
-        private void btn_QL_SinhVien_ItemClick(object sender, ItemClickEventArgs e) => TabManager.OpenForm(
-            new Form_QL_SinhVien(),
-            ConstantValues.TenFormQuanLySinhVien);
+        private void btn_QL_SinhVien_ItemClick(object sender, ItemClickEventArgs e) => TabManager.OpenForm(new Form_QL_SinhVien());
 
-        private void btn_QL_TaoLopTinChi_ItemClick(object sender, ItemClickEventArgs e) => TabManager.OpenForm(
-            new Form_Tao_LopTinChi(),
-            ConstantValues.TenFormTaoLopTinChi);
+        private void btn_QL_TaoLopTinChi_ItemClick(object sender, ItemClickEventArgs e) => TabManager.OpenForm(new Form_Tao_LopTinChi());
 
-        private void btn_XepLopTinChi_ItemClick(object sender, ItemClickEventArgs e) => TabManager.OpenForm(
-            new Form_Xep_LopTinChi(),
-            ConstantValues.TenFormXepLopTinChi);
+        private void btn_XepLopTinChi_ItemClick(object sender, ItemClickEventArgs e) => TabManager.OpenForm(new Form_Xep_LopTinChi());
 
 
         private void loadDefaultForm()
@@ -105,6 +89,6 @@ namespace QLDiemSV_Winform
         }
 
         private void btn_QL_Khoa_ItemClick(object sender, ItemClickEventArgs e)
-        { TabManager.OpenForm(new Form_QL_Khoa(), ConstantValues.TenFormQuanLyKhoa); }
+        { TabManager.OpenForm(new Form_QL_Khoa()); }
     }
 }

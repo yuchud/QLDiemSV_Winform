@@ -14,6 +14,11 @@ namespace QLDiemSV_Winform.SubForm
 {
     public partial class Form_Nhap_DiemSinhVien : DevExpress.XtraEditors.XtraForm
     {
+
+        private static readonly string Action = ConstantValues.ActionEnter;
+        private static readonly string Target = ConstantValues.TargetScore;
+        public static readonly string FormName = Action + (Action.Length > 0 && Target.Length > 0 ? " " : "") + Target;
+
         private int maLopTinChi;
         private int maMonHoc;
         bool isReadOnlyCC, isReadOnlyBT, isReadOnlyKT, isReadOnlyTH, isReadOnlyThi;
@@ -25,7 +30,7 @@ namespace QLDiemSV_Winform.SubForm
         private void btn_Thoat_Click(object sender, EventArgs e) => TabManager.CloseForm(this);
 
         private List<BangDiemInfoDTO> dataListBangDiem_Create()
-        { return BangDiemApiController.GetListBangDiemByMaLopTinChi(maLopTinChi); }
+        { return BangDiemController.GetListBangDiemByMaLopTinChi(maLopTinChi); }
 
 
         private void dgv_BangDiem_Column_SetReadOnly()
@@ -54,11 +59,10 @@ namespace QLDiemSV_Winform.SubForm
                 if (column.ReadOnly)
                     column.DefaultCellStyle.BackColor = Color.White;
 
-            MonHocDTO monhoc = MonHocApiController.GetMonHoc(maMonHoc);
+            MonHocDTO monhoc = MonHocController.GetMonHoc(maMonHoc);
             DataGridViewManager.HideColumn(dgv_BangDiem, "maBangDiem");
             DataGridViewManager.HideColumn(dgv_BangDiem, "maLopTc");
             if (monhoc == null) return;
-
 
             int cc = Convert.ToInt32(monhoc.TschuyenCan);
             int bt = Convert.ToInt32(monhoc.TsbaiTap);
@@ -321,12 +325,7 @@ namespace QLDiemSV_Winform.SubForm
 
         private void btn_XacNhan_Click(object sender, EventArgs e)
         {
-            DialogResult dialogResult = MessageBox.Show(
-                "Xác nhận cập nhật?",
-                "Xác nhận",
-                MessageBoxButtons.YesNo,
-                MessageBoxIcon.Question);
-            if (dialogResult == DialogResult.No)
+            if (MessageBoxManager.OpenMessageBox(Action, Target) == false)
                 return;
 
             foreach (DataGridViewRow dataGridViewRow in dgv_BangDiem.Rows)
@@ -339,7 +338,7 @@ namespace QLDiemSV_Winform.SubForm
                 double kiemTra = Convert.ToInt32(dataGridViewRow.Cells["kiemTra"].Value);
                 double thucHanh = Convert.ToInt32(dataGridViewRow.Cells["thucHanh"].Value);
                 double thi = Convert.ToInt32(dataGridViewRow.Cells["thi"].Value);
-                BangDiemApiController.PutBangDiem(new BangDiemDTO(maBangDiem, maLopTc, maSv, chuyenCan, baiTap, kiemTra, thucHanh, thi, 0));
+                BangDiemController.PutBangDiem(new BangDiemDTO(maBangDiem, maLopTc, maSv, chuyenCan, baiTap, kiemTra, thucHanh, thi, 0));
             }
             form_LoadInitial();
         }

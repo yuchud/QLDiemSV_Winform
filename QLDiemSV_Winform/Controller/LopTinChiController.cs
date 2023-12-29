@@ -9,31 +9,21 @@ using System.Net.Http;
 
 namespace QLDiemSV_Winform.ApiController
 {
-    internal class LopTinChiApiController
+    internal class LopTinChiController
     {
         private static readonly string Api_LopTinChi_Url = Program.ApiBaseUrl + "/LopTinChi";
 
-        public LopTinChiApiController()
+        public LopTinChiController()
         {
         }
 
-        public static EnumCode.ApiDeleteResult DeleteLopTinChi(int maLopTinChi)
+        public static HttpStatusCode DeleteLopTinChi(int maLopTinChi)
         {
-            try
+            using (var httpClient = new HttpClient())
             {
-                using (var httpClient = new HttpClient())
-                {
-                    HttpResponseMessage httpResponse = httpClient.DeleteAsync($"{Api_LopTinChi_Url}/{maLopTinChi}")
-                        .Result;
-                    return httpResponse.IsSuccessStatusCode || httpResponse.StatusCode == HttpStatusCode.NoContent
-                        ? EnumCode.ApiDeleteResult.Success
-                        : EnumCode.ApiDeleteResult.Failure;
-                }
-            } catch (Exception ex)
-            {
-                // Handle exceptions or log errors as needed
-                Console.WriteLine($"Error deleting Lop Tin Chi: {ex.Message}");
-                return EnumCode.ApiDeleteResult.Failure;
+                HttpResponseMessage httpResponse = httpClient.DeleteAsync($"{Api_LopTinChi_Url}/{maLopTinChi}")
+                    .Result;
+                return httpResponse.StatusCode;
             }
         }
 

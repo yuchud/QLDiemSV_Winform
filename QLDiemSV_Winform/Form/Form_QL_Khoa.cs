@@ -10,8 +10,12 @@ using System.Windows.Forms;
 
 namespace QLDiemSV_Winform.Form.FormQuanLy
 {
+
     public partial class Form_QL_Khoa : DevExpress.XtraEditors.XtraForm
     {
+        private static readonly string Action = ConstantValues.ActionManage;
+        private static readonly string Target = ConstantValues.TargetBranch;
+        public static readonly string FormName = Action + (Action.Length > 0 && Target.Length > 0 ? " " : "") + Target;
         public Form_QL_Khoa()
         {
             InitializeComponent();
@@ -36,57 +40,42 @@ namespace QLDiemSV_Winform.Form.FormQuanLy
 
         private void btn_XacNhan_Click(object sender, EventArgs e)
         {
-            bool isNoneEmptyField = inputField_CheckNoneEmpty();
-            bool isAdd = txt_Ma.Text == "0";
-            string action = (isAdd) ? "thêm" : "chỉnh sửa";
-            if(isNoneEmptyField)
-            {
-                DialogResult dialogResult = MessageBox.Show(
-                    $"Bạn có chắc chắn {action} khoa này?",
-                    "Xác nhận",
-                    MessageBoxButtons.YesNo,
-                    MessageBoxIcon.Question);
-                if(dialogResult == DialogResult.No)
-                    return;
-                HttpStatusCode httpStatusCode;
-                if(isAdd)
-                    httpStatusCode = KhoaApiController.PostKhoa(dataKhoa_Create(0));
-                else
-                    httpStatusCode = KhoaApiController.PutKhoa(dataKhoa_Create(Convert.ToInt32(txt_Ma.Text)));
 
-                if(StatusCodeChecker.GetResponseClass(httpStatusCode) ==
-                    EnumCode.HTTPResponseStatusClass.SuccessfulResponses)
+            if (inputField_CheckNoneEmpty() == false) return;
+            bool isAdding = txt_Ma.Text == "0";
+            string editAction = (isAdding) ? ConstantValues.ActionCreate : ConstantValues.ActionUpdate;
+
+            if (MessageBoxManager.OpenMessageBox(editAction, Target) == false)
+                return;
+
+            HttpStatusCode httpStatusCode;
+            if (isAdding)
+                httpStatusCode = KhoaController.PostKhoa(dataKhoa_Create(0));
+            else
+                httpStatusCode = KhoaController.PutKhoa(
+                    dataKhoa_Create(Convert.ToInt32(txt_Ma.Text)));
+
+            if (MessageBoxManager.ShowResult(httpStatusCode, editAction, Target) == true)
+            {
+                if (isAdding)
+                    form_LoadInitial();
+                else
                 {
-                    MessageBox.Show(
-                        $"Đã {action} khoa thành công!",
-                        "Success",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Information);
-                    if(isAdd)
-                        form_LoadInitial();
-                    else
-                    {
-                        int currentSelectedRow = dgv_Khoa.SelectedRows[0].Index;
-                        dgv_Khoa_FillData();
-                        dgv_Khoa.Rows[currentSelectedRow].Selected = true;
-                    }
-                } else
-                    MessageBox.Show(
-                        $"{action} thất bại. Status code: {httpStatusCode}",
-                        "Error",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Error);
-                inputField_Close();
+                    int currentSelectedRow = dgv_Khoa.SelectedRows[0].Index;
+                    dgv_Khoa_FillData();
+                    dgv_Khoa.Rows[currentSelectedRow].Selected = true;
+                }
             }
+            inputField_Close();
         }
 
         private (bool canDelete, string error) btn_Xoa_CheckBeforeDelete(int maKhoa)
         {
-            if(GiangVienApiController.GetListGiangVienByMaKhoa(maKhoa).Count > 0)
+            if(GiangVienController.GetListGiangVienByMaKhoa(maKhoa).Count > 0)
             {
                 return (false, "Không thể xóa vì khoa đang có giảng viên");
             }
-            if(LopSinhVienApiController.GetListLopSinhVienByMaKhoa(maKhoa).Count > 0)
+            if(LopSinhVienController.GetListLopSinhVienByMaKhoa(maKhoa).Count > 0)
             {
                 return (false, "Không thể xóa vì khoa đang có lớp sinh viên");
             }
@@ -105,22 +94,10 @@ namespace QLDiemSV_Winform.Form.FormQuanLy
                 return;
             }
 
-            DialogResult dialogResult = MessageBox.Show(
-                "Bạn có chắc chắn xóa khoa này?",
-                "Xác nhận",
-                MessageBoxButtons.YesNo,
-                MessageBoxIcon.Question);
-            if(dialogResult == DialogResult.No)
-                return;
-            bool isDeletionSuccessful = KhoaApiController.DeleteKhoa(maKhoa) == EnumCode.ApiDeleteResult.Success;
+            if (MessageBoxManager.OpenMessageBox(ConstantValues.ActionDelete, Target) == false) return;
 
-            if(isDeletionSuccessful)
-            {
-                MessageBox.Show("Xóa khoa thành công!");
-                form_LoadInitial();
-                // Perform additional actions after a successful deletion if needed
-            } else
-                MessageBox.Show("Xóa khoa thất bại.");
+            if (MessageBoxManager.ShowResult(KhoaController.DeleteKhoa(maKhoa), ConstantValues.ActionDelete, Target)) form_LoadInitial();
+
         }
 
         private KhoaDTO dataKhoa_Create(int maKhoa)
@@ -141,7 +118,7 @@ namespace QLDiemSV_Winform.Form.FormQuanLy
 
         private void dgv_Khoa_FillData()
         {
-            dgv_Khoa.DataSource = KhoaApiController.GetAllKhoa();
+            dgv_Khoa.DataSource = KhoaController.GetAllKhoa();
             lbl_SoLuong.Text = dgv_Khoa.RowCount.ToString();
             dgv_Khoa.ClearSelection();
         }
@@ -191,7 +168,7 @@ namespace QLDiemSV_Winform.Form.FormQuanLy
                 inputField_ClearAllData();
                 return;
             }
-            KhoaDTO Khoa = KhoaApiController.GetKhoa(maKhoa);
+            KhoaDTO Khoa = KhoaController.GetKhoa(maKhoa);
             txt_Ma.Enabled = true;
             txt_Ma.Text = Khoa.MaKhoa.ToString();
             txt_Ma.Enabled = false;
@@ -217,7 +194,7 @@ namespace QLDiemSV_Winform.Form.FormQuanLy
         }
 
         private void txt_Ten_KeyPress(object sender, KeyPressEventArgs e)
-        { KeyHandler.CheckErrorKeyPressEvent(sender, txt_Ten, lbl_error_Ten, e, KeyHandler.DigitTextHandler); }
+        { KeyHandler.CheckErrorKeyPressEvent(sender, lbl_error_Ten, e, KeyHandler.DigitTextHandler); }
 
 
         private void txt_Ten_Leave(object sender, EventArgs e)

@@ -13,6 +13,8 @@ namespace QLDiemSV_Winform.DTO
 
         public string TenSv { get; set; }
 
+        public string TenLopSv { get; set; }
+
         public double ChuyenCan { get; set; }
 
         public double BaiTap { get; set; }

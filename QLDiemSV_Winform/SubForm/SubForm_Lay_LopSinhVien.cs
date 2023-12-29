@@ -27,7 +27,7 @@ namespace QLDiemSV_Winform.SubForm
 
         private void cmb_Khoa_FillData()
         {
-            cmb_Khoa.DataSource = KhoaApiController.GetAllKhoa();
+            cmb_Khoa.DataSource = KhoaController.GetAllKhoa();
             cmb_Khoa.DisplayMember = "tenKhoa";
             cmb_Khoa.ValueMember = "maKhoa";
         }
@@ -54,7 +54,7 @@ namespace QLDiemSV_Winform.SubForm
 
         private void dgv_LopSinhVien_FillData(int MaKhoa)
         {
-            dgv_LopSinhVien.DataSource = LopSinhVienApiController.GetListLopSinhVienByMaKhoa(MaKhoa);
+            dgv_LopSinhVien.DataSource = LopSinhVienController.GetListLopSinhVienByMaKhoa(MaKhoa);
             dgvColumn_Hide("maKhoa");
             lbl_SoLuong.Text = dgv_LopSinhVien.RowCount.ToString();
             dgv_LopSinhVien.ClearSelection();

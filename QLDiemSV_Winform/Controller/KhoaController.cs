@@ -9,30 +9,21 @@ using System.Net.Http;
 
 namespace QLDiemSV_Winform.ApiController
 {
-    internal class KhoaApiController
+    internal class KhoaController
     {
         private static readonly string Api_Khoa_Url = Program.ApiBaseUrl + "/Khoa";
 
-        public KhoaApiController()
+        public KhoaController()
         {
         }
 
-        public static EnumCode.ApiDeleteResult DeleteKhoa(int maKhoa)
+        public static HttpStatusCode DeleteKhoa(int maKhoa)
         {
-            try
+            using (var httpClient = new HttpClient())
             {
-                using(var httpClient = new HttpClient())
-                {
-                    HttpResponseMessage httpResponse = httpClient.DeleteAsync($"{Api_Khoa_Url}/{maKhoa}").Result;
-                    return httpResponse.IsSuccessStatusCode || httpResponse.StatusCode == HttpStatusCode.NoContent
-                        ? EnumCode.ApiDeleteResult.Success
-                        : EnumCode.ApiDeleteResult.Failure;
-                }
-            } catch(Exception ex)
-            {
-                // Handle exceptions or log errors as needed
-                Console.WriteLine($"Error deleting Khoa: {ex.Message}");
-                return EnumCode.ApiDeleteResult.Failure;
+                HttpResponseMessage httpResponse = httpClient.DeleteAsync($"{Api_Khoa_Url}/{maKhoa}")
+                    .Result;
+                return httpResponse.StatusCode;
             }
         }
 

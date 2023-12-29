@@ -4,6 +4,7 @@ using QLDiemSV_Winform.Validation;
 using System;
 using System.Linq;
 using System.Net;
+using System.Net.Mail;
 
 namespace QLDiemSV_Winform.Secure
 {
@@ -11,23 +12,24 @@ namespace QLDiemSV_Winform.Secure
     {
         private static EnumCode.Decentralization quyen = EnumCode.Decentralization.None;
 
-        public static bool ChangePassword(string matKhauMoi)
+        public static HttpStatusCode ChangePassword(string matKhauMoi)
         {
             using (var credential = new Credential { Target = "MyAppCredential" })
             {
+                HttpStatusCode httpStatusCode = HttpStatusCode.Gone;
                 if (credential.Load())
                 {
-                    HttpStatusCode httpStatusCode = GiangVienApiController.PutMatKhau(
+                    httpStatusCode = GiangVienController.PutMatKhau(
                         new DTO.TaiKhoanDTO(credential.Username, matKhauMoi));
                     bool isChangeSuccessful = StatusCodeChecker.GetResponseClass(httpStatusCode) ==
                         EnumCode.HTTPResponseStatusClass.SuccessfulResponses;
                     if (isChangeSuccessful)
                     {
                         credential.Password = matKhauMoi;
-                        return true;
+                        return httpStatusCode;
                     }
                 }
-                return false;
+                return httpStatusCode;
             }
         }
 
@@ -67,7 +69,7 @@ namespace QLDiemSV_Winform.Secure
                 credential.Target = "MyAppCredential";
                 credential.Username = tenDangNhap;
                 credential.Password = matKhau;
-                int maQuyen = GiangVienApiController.GetGiangVien(Convert.ToInt32(tenDangNhap)).MaQuyen;
+                int maQuyen = GiangVienController.GetGiangVien(Convert.ToInt32(tenDangNhap)).MaQuyen;
                 quyen = TeacherDecentralization.GetQuyenGiangVien(maQuyen);
                 credential.Save();
             }

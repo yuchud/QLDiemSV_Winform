@@ -32,7 +32,7 @@ namespace QLDiemSV_Winform.SubForm
 
         private List<MonHocDTO> dataListMonHoc_Create(List<int> exclusionSubjectIdList)
         {
-            List<MonHocDTO> monhocList = MonHocApiController.GetListMonHoc();
+            List<MonHocDTO> monhocList = MonHocController.GetListMonHoc();
             List<MonHocDTO> currentMonHocList = new List<MonHocDTO>();
             foreach (MonHocDTO monHoc in monhocList)
             {

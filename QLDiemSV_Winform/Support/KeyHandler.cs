@@ -17,16 +17,16 @@ namespace QLDiemSV_Winform.Validation
 
         public static void CheckErrorKeyPressEvent(
             object sender,
-            TextBox textBox,
             Label label,
             KeyPressEventArgs e,
             Func<KeyPressEventArgs, (bool handler, string errorString)> funcHandler)
         {
+            TextBox currentTextBox = (TextBox) sender;
             label.Visible = false;
-            if ((e.KeyChar != (char)Keys.Back) && (textBox.TextLength == textBox.MaxLength))
+            if ((e.KeyChar != (char)Keys.Back) && (currentTextBox.TextLength == currentTextBox.MaxLength))
             {
                 e.Handled = true;
-                label.Text = $"Chỉ nhận tối đa {textBox.MaxLength} kí tự";
+                label.Text = $"Chỉ nhận tối đa {currentTextBox.MaxLength} kí tự";
                 label.Visible = true;
                 return;
             }

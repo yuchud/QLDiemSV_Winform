@@ -14,6 +14,9 @@ namespace QLDiemSV_Winform.Form.FormQuanLy
 {
     public partial class Form_Xep_LopTinChi : DevExpress.XtraEditors.XtraForm
     {
+        private static readonly string Action = ConstantValues.ActionPlacement;
+        private static readonly string Target = ConstantValues.TargetCreditClass;
+        public static readonly string FormName = Action + (Action.Length > 0 && Target.Length > 0 ? " " : "") + Target;
         private int maLopTinChi;
 
         public Form_Xep_LopTinChi()
@@ -52,24 +55,11 @@ namespace QLDiemSV_Winform.Form.FormQuanLy
                 int maSinhVien = subForm_Lay_SinhVien.MaSinhVien;
                 if (maSinhVien != 0)
                 {
-                    HttpStatusCode httpStatusCode = BangDiemApiController.PostBangDiem(dataBangDiem_Create(maSinhVien));
-
-                    if (StatusCodeChecker.GetResponseClass(httpStatusCode) ==
-                        EnumCode.HTTPResponseStatusClass.SuccessfulResponses)
-                    {
-                        MessageBox.Show(
-                            $"Thêm sinh viên vào lớp tín chỉ thành công!",
-                            "Success",
-                            MessageBoxButtons.OK,
-                            MessageBoxIcon.Information);
-                        form_LoadInitial();
-                    }
-                    else
-                        MessageBox.Show(
-                            $"Thêm sinh viên vào lớp tín chỉ thất bại!. Status code: {httpStatusCode}",
-                            "Error",
-                            MessageBoxButtons.OK,
-                            MessageBoxIcon.Error);
+                    HttpStatusCode httpStatusCode = BangDiemController.PostBangDiem(dataBangDiem_Create(maSinhVien));
+                    string actionCreate = ConstantValues.ActionCreate;
+                    string target = ConstantValues.TargetStudent;
+                    string from = Target;
+                    if (MessageBoxManager.ShowResult(httpStatusCode, actionCreate, target, from) == true) form_LoadInitial();
                 }
             }
         }
@@ -79,7 +69,7 @@ namespace QLDiemSV_Winform.Form.FormQuanLy
         private (bool canDelete, string error) btn_Xoa_CheckBeforeDelete()
         {
             int maBangDiem = Convert.ToInt32(dgv_SinhVien.SelectedRows[0].Cells["maBangDiem"].Value);
-            if (BangDiemApiController.GetBangDiem(maBangDiem).TongKet > 0.0)
+            if (BangDiemController.GetBangDiem(maBangDiem).TongKet > 0.0)
                 return (false, "Không thể xóa vì ở lớp tín chỉ này sinh viên đã có điểm");
             return (true, string.Empty);
         }
@@ -95,29 +85,20 @@ namespace QLDiemSV_Winform.Form.FormQuanLy
                 return;
             }
 
-            DialogResult dialogResult = MessageBox.Show(
-                "Bạn có chắc chắn xóa sinh viên này khỏi lớp tín chỉ?",
-                "Xác nhận",
-                MessageBoxButtons.YesNo,
-                MessageBoxIcon.Question);
-            if (dialogResult == DialogResult.No)
-                return;
             int maSinhVien = Convert.ToInt32(dgv_SinhVien.SelectedRows[0].Cells["maSv"].Value);
-            bool isDeletionSuccessful = BangDiemApiController.DeleteBangDiem(maLopTinChi, maSinhVien) ==
-                EnumCode.ApiDeleteResult.Success;
 
-            if (isDeletionSuccessful)
-            {
-                MessageBox.Show("Xóa sinh viên thành công!");
-                form_LoadInitial();
-                // Perform additional actions after a successful deletion if needed
-            }
-            else
-                MessageBox.Show("Xóa sinh viên thất bại.");
+            string actionDelete = ConstantValues.ActionDelete;
+            string target = ConstantValues.TargetStudent;
+            string from = Target;
+
+            if (MessageBoxManager.OpenMessageBox(actionDelete, Target, from) == false) return;
+
+            HttpStatusCode httpStatusCode = BangDiemController.DeleteBangDiem(maLopTinChi, maSinhVien);
+            if (MessageBoxManager.ShowResult(httpStatusCode, actionDelete, target, from)) form_LoadInitial();
         }
 
         private List<BangDiemInfoDTO> dataBangDiem_Create()
-        { return BangDiemApiController.GetListBangDiemByMaLopTinChi(maLopTinChi); }
+        { return BangDiemController.GetListBangDiemByMaLopTinChi(maLopTinChi); }
 
         private BangDiemDTO dataBangDiem_Create(int maSinhVien)
         { return new BangDiemDTO(0, maLopTinChi, maSinhVien, 0, 0, 0, 0, 0, 0); }
@@ -131,6 +112,7 @@ namespace QLDiemSV_Winform.Form.FormQuanLy
         private void dgv_SinhVienLopTinChi_LoadData()
         {
             dgv_SinhVien.DataSource = dataBangDiem_Create();
+            DataGridViewManager.HideColumn(dgv_SinhVien, "maBangDiem");
             DataGridViewManager.HideColumn(dgv_SinhVien, "maLopTc");
             DataGridViewManager.HideColumn(dgv_SinhVien, "chuyenCan");
             DataGridViewManager.HideColumn(dgv_SinhVien, "baiTap");

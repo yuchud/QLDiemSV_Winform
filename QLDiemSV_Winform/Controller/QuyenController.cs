@@ -10,10 +10,10 @@ using System.Threading.Tasks;
 namespace QLDiemSV_Winform.ApiController
 {
 
-    internal class QuyenApiController
+    internal class QuyenController
     {
         private static readonly string Api_Quyen_Url = Program.ApiBaseUrl + "/Quyen";
-        public QuyenApiController() { }
+        public QuyenController() { }
 
         public static QuyenDTO GetQuyen(int maQuyen)
         {
